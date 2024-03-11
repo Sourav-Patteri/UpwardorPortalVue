@@ -1,18 +1,12 @@
 <template>
   <div class='app'>
     Upwardor Portal
-    <DoorForm />
+    <quote-generator />
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue';
-import DoorForm from '@/components/DoorForm.vue';
-
-export default defineComponent({
- name: 'App',
- components: {DoorForm}
-});
+<script setup lang='ts'>
+import QuoteGenerator from '@/components/QuoteGenerator.vue';
 </script>
 
 <style scoped>
