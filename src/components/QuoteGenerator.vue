@@ -1,9 +1,16 @@
 <template>
   <form>
     <div class='form-value__container'>
-      <label for='num-of-doors'>Number of doors:</label>
-      <input v-model='doors' type='number' min='1' max='1000' id='num-of-doors' required/>
-      <small>Warning message</small>
+      <form-input
+        required
+        label='Number of doors'
+        placeholder='Number of doors'
+        :value='doors'
+        :min='1'
+        :max='1000'
+        @change='(...v) => updateDoorsValue(...v)'
+      >
+      </form-input>
     </div>
 
     <div class='form-value__container'>
@@ -105,12 +112,16 @@
     </div>
 
     <div class='form-value__container'>
-      <span class='ip-with-suffix'>
-        <label for='extension-height'>Extension Height</label>
-        <input id='extension-height' type='number' min='1' max='15' v-model='extensionHeight' />
-        <small class='suffix'>ft</small>
-      </span>
-      <small>Warning message</small>
+      <form-input
+        label='Extension Height'
+        placeholder='Extension height'
+        suffix='ft'
+        :value='extensionHeight'
+        :min='1'
+        :max='15'
+        @change='(...v) => updateExtensionHeightValue(...v)'
+      >
+      </form-input>
     </div>
 
     <div class='form-value__container'>
@@ -138,6 +149,8 @@
 <script setup lang='ts'>
 import { computed, ref } from 'vue';
 
+import MultiselectTypeahead from '@/components/lib/MultiselectTypeahead.vue';
+import FormInput from '@/components/lib/FormInput.vue';
 import {
   doorMeasurementsOptions,
   stampPatterns,
@@ -192,8 +205,23 @@ const displayDoorHeights = computed((): Array<string> => {
   return heights;
 });
 
-function updateExtrasList(extra: string): void {
-  selectedExtras.value.push(extra);
+function updateDoorsValue(value: number | null): void {
+  doors.value = value;
+}
+
+function updateExtensionHeightValue(value: number | null): void {
+  extensionHeight.value = value;
+}
+
+function updateSelectedExtras(extra: string, updateMethod: OptionsUpdateMethod): void {
+  switch(updateMethod) {
+    case OptionsUpdateMethod.add:
+      selectedExtras.value.push(extra);
+      break;
+
+    case OptionsUpdateMethod.remove:
+      selectedExtras.value = selectedExtras.value.filter((v) => v !== extra);
+  };
 }
 </script>
 
