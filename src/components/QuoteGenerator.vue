@@ -125,19 +125,14 @@
     </div>
 
     <div class='form-value__container'>
-      <p>Extras:</p>
-      <div>
-        <span v-for='(extra, index) in selectedExtras' :key='`selected-extra-${index}`'>
-          <p class='selected-list'>
-            <span>{{ extra }}</span>
-            <button>x</button> <!-- TODO: Remove from list -->
-          </p>
-        </span>
-        <input type='text' /> <!-- TODO: Implement Typeahead -->
-      </div>
-      <ul v-if='isExtrasListOpen'>
-        <li v-for='(extra, index) in hardwareExtras' :key='`extras-${index}`' @click='updateExtrasList(extra)'>{{ extra }}</li>
-      </ul>
+      <multiselect-typeahead
+        label='Extras'
+        :options='hardwareExtras'
+        :selected='selectedExtras'
+        @add='(...v) => updateSelectedExtras(...v, OptionsUpdateMethod.add)'
+        @remove='(...v) => updateSelectedExtras(...v, OptionsUpdateMethod.remove)'
+      >
+      </multiselect-typeahead>
     </div>
 
     <div class='form-value__container'>
@@ -163,7 +158,12 @@ import {
 } from '@/models/orders';
 
 
-const doors = ref<number>(1);
+enum OptionsUpdateMethod {
+  add = 'ADD',
+  remove = 'REMOVE'
+};
+
+const doors = ref<number | null>(1);
 const isPanelsOnlyOrder = ref<boolean>(false);
 const selectedDoorWidth = ref<string | null>(null);
 const selectedDoorHeight = ref<string | null>(null);
@@ -181,7 +181,6 @@ const selectedTrackType = ref<string | null>(null);
 const chosenSpecialTrackRequest = ref<string | null>(null);
 const extensionHeight = ref<number>(1);
 const selectedExtras = ref<Array<string>>(hardwareExtras);
-const isExtrasListOpen = ref<boolean>(false);
 
 const displayDoorWidths = computed((): Array<string> => {
   return doorMeasurementsOptions.widthOptions.map((val) => `${val.foot}'`);
