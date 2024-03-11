@@ -68,3 +68,8 @@ export const trackTypeOptions: Array<KeyValueSelects> = [
 export const specialTrackRequestOptions: Array<KeyValueSelects> = [
   { key: 'high-lift-kits', displayName: 'HIGH LIFT KITS' }, { key: 'low-head-room-kits', displayName: 'LOW HEAD ROOM KITS' }
 ];
+
+export const hardwareExtras: Array<string> = [
+  'Shafts', 'Springs', 'Struts', 'Hardware Kits', 'Weather Stripping',
+  'Decorative Hardware Parts', 'Astragal and Bottom Retainer'
+];
