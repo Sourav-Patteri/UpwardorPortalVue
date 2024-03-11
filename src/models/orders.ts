@@ -52,3 +52,7 @@ export const stampPatterns: Array<StampPattern> = [
   { key: 'SH', displayName: 'Sheridan' },
   { key: 'SHXL', displayName: 'Sheridan XL' }
 ];
+
+export const panelColors: Array<string> = [
+  'WHITE', 'SANDTONE', 'BLACK', 'BRONZE', 'NEW BROWN', 'STEEL GREY', 'NEW ALMOND', 'WALNUT'
+];
