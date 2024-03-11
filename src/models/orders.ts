@@ -3,8 +3,8 @@ export interface MeasurementOptions {
   inches?: Array<string>
 }
 
-export interface StampPattern {
-  key: string,
+export interface KeyValueSelects {
+  key: string
   displayName: string
 }
 
@@ -14,37 +14,16 @@ export const doorWidths: Array<string | MeasurementOptions> = [
 ];
 
 export const doorHeights: Array<MeasurementOptions> = [
-  {
-    foot: '06',
-    inches: [ '0', '3', '6', '9' ]
-  },
-  {
-    foot: '07',
-    inches: [ '0', '3', '6', '9' ]
-  },
-  {
-    foot: '08',
-    inches: [ '0', '3', '6', '9' ]
-  },
-  {
-    foot: '09',
-    inches: [ '0', '3', '6', '9' ]
-  },
-  {
-    foot: '10',
-    inches: [ '0', '3', '6', '9' ]
-  },
-  {
-    foot: '11',
-    inches: [ '0', '3', '6', '9' ]
-  },
-  {
-    foot: '12',
-    inches: [ '0' ]
-  }
+  { foot: '06', inches: [ '0', '3', '6', '9' ] },
+  { foot: '07', inches: [ '0', '3', '6', '9' ] },
+  { foot: '08', inches: [ '0', '3', '6', '9' ] },
+  { foot: '09', inches: [ '0', '3', '6', '9' ] },
+  { foot: '10', inches: [ '0', '3', '6', '9' ] },
+  { foot: '11', inches: [ '0', '3', '6', '9' ] },
+  { foot: '12', inches: [ '0' ] }
 ];
 
-export const stampPatterns: Array<StampPattern> = [
+export const stampPatterns: Array<KeyValueSelects> = [
   { key: 'FLUSH', displayName: 'Flush' },
   { key: 'TRAFALGAR', displayName: 'Trafalgar' },
   { key: 'BC', displayName: 'Bronte Creek' },
@@ -55,4 +34,23 @@ export const stampPatterns: Array<StampPattern> = [
 
 export const panelColors: Array<string> = [
   'WHITE', 'SANDTONE', 'BLACK', 'BRONZE', 'NEW BROWN', 'STEEL GREY', 'NEW ALMOND', 'WALNUT'
+];
+
+export const frameSizes: Array<string> = [ 'Long', 'Short' ];
+
+export const glazingTypeOptions: Array<KeyValueSelects> = [
+  { key: '5', displayName: 'NO GLASS' },
+  { key: '2', displayName: 'THERM - CLEAR/ CLEAR' },
+  { key: '1', displayName: 'SINGLE - CLEAR/ CLEAR' },
+  { key: '4', displayName: 'THERM - ACID ETCHED' }
+];
+
+export const insertTypeOptions: Array<KeyValueSelects> = [
+  { key: '00', displayName: 'No Insert' },
+  { key: '02', displayName: 'CASCADE' },
+  { key: '06', displayName: 'STOCKTON' },
+  { key: '10', displayName: 'ARCHED STOCKBRIDGE' },
+  { key: '11', displayName: 'ARCHED STOCKTON' },
+  { key: '12', displayName: 'STRAIGHT STOCKBRIDGE' },
+  { key: '13', displayName: 'WATERTON' }
 ];
