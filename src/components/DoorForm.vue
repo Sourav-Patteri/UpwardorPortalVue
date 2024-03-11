@@ -3,6 +3,7 @@
     <div class='form-value__container'>
       <label for='num-of-doors'>Number of doors:</label>
       <input v-model='doors' type='number' min='1' max='1000' id='num-of-doors' required/>
+      <small>Warning message</small>
     </div>
 
     <div class='form-value__container'>
@@ -109,6 +110,7 @@
         <input id='extension-height' type='number' min='1' max='15' v-model='extensionHeight' />
         <small class='suffix'>ft</small>
       </span>
+      <small>Warning message</small>
     </div>
 
     <div class='form-value__container'>
