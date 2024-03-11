@@ -3,17 +3,28 @@ export interface MeasurementOptions {
   inches?: Array<string>
 }
 
-export interface KeyValueSelects {
+export interface DoorMeasurementsOptions {
+  widthOptions: Array<MeasurementOptions>
+  heightOptions: Array<MeasurementOptions>
+}
+
+export interface KeyValueSelect {
   key: string
   displayName: string
 }
 
-export const doorWidths: Array<string | MeasurementOptions> = [
+export interface TrackOptions {
+  trackRadiusOptions: Array<number>
+  trackTypeOptions: Array<KeyValueSelect>
+  specialTrackRequestOptions: Array<KeyValueSelect>
+}
+
+const doorWidths: Array<MeasurementOptions> = [
   { foot: '08' }, { foot: '09' }, { foot: '10' }, { foot: '12' },
   { foot: '14' }, { foot: '16' }, { foot: '18' }
 ];
 
-export const doorHeights: Array<MeasurementOptions> = [
+const doorHeights: Array<MeasurementOptions> = [
   { foot: '06', inches: [ '0', '3', '6', '9' ] },
   { foot: '07', inches: [ '0', '3', '6', '9' ] },
   { foot: '08', inches: [ '0', '3', '6', '9' ] },
@@ -23,7 +34,12 @@ export const doorHeights: Array<MeasurementOptions> = [
   { foot: '12', inches: [ '0' ] }
 ];
 
-export const stampPatterns: Array<KeyValueSelects> = [
+export const doorMeasurementsOptions: DoorMeasurementsOptions = {
+  widthOptions: doorWidths,
+  heightOptions: doorHeights
+};
+
+export const stampPatterns: Array<KeyValueSelect> = [
   { key: 'FLUSH', displayName: 'Flush' },
   { key: 'TRAFALGAR', displayName: 'Trafalgar' },
   { key: 'BC', displayName: 'Bronte Creek' },
@@ -38,14 +54,14 @@ export const panelColors: Array<string> = [
 
 export const frameSizes: Array<string> = [ 'Long', 'Short' ];
 
-export const glazingTypeOptions: Array<KeyValueSelects> = [
+export const glazingTypeOptions: Array<KeyValueSelect> = [
   { key: '5', displayName: 'NO GLASS' },
   { key: '2', displayName: 'THERM - CLEAR/ CLEAR' },
   { key: '1', displayName: 'SINGLE - CLEAR/ CLEAR' },
   { key: '4', displayName: 'THERM - ACID ETCHED' }
 ];
 
-export const insertTypeOptions: Array<KeyValueSelects> = [
+export const insertTypeOptions: Array<KeyValueSelect> = [
   { key: '00', displayName: 'No Insert' },
   { key: '02', displayName: 'CASCADE' },
   { key: '06', displayName: 'STOCKTON' },
@@ -55,9 +71,9 @@ export const insertTypeOptions: Array<KeyValueSelects> = [
   { key: '13', displayName: 'WATERTON' }
 ];
 
-export const trackRadii: Array<number> = [ 12, 15 ];
+const trackRadii: Array<number> = [ 12, 15 ];
 
-export const trackTypeOptions: Array<KeyValueSelects> = [
+const trackTypeOptions: Array<KeyValueSelect> = [
   { key: 'standard-lift-bracket', displayName: 'STANDARD LIFT BRACKET MOUNT' },
   { key: 'standard-lift-angle', displayName: 'STANDARD LIFT ANGLE MOUNT' },
   { key: 'standard-lift-long-angle', displayName: 'STANDARD LIFT LONG ANGLE' },
@@ -65,9 +81,15 @@ export const trackTypeOptions: Array<KeyValueSelects> = [
   { key: 'vertical-lift-angle', displayName: 'VERTICAL LIFT ANGLE MOUNT' }
 ];
 
-export const specialTrackRequestOptions: Array<KeyValueSelects> = [
+const specialTrackRequestOptions: Array<KeyValueSelect> = [
   { key: 'high-lift-kits', displayName: 'HIGH LIFT KITS' }, { key: 'low-head-room-kits', displayName: 'LOW HEAD ROOM KITS' }
 ];
+
+export const trackOptions: TrackOptions = {
+  trackRadiusOptions: trackRadii,
+  trackTypeOptions,
+  specialTrackRequestOptions
+};
 
 export const hardwareExtras: Array<string> = [
   'Shafts', 'Springs', 'Struts', 'Hardware Kits', 'Weather Stripping',
