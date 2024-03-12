@@ -4,7 +4,7 @@
     <br>
     <div class='field'>
       <input :id='inputId' v-model='searchQuery' ref='searchRef' @focusin.stop='isSearchingOptions = true' />
-      <button class='close' @click.prevent='closeSelections'>
+      <button v-if='isSearchingOptions' class='close' @click.prevent='closeSelections'>
         <close-icon></close-icon>
       </button>
     </div>
@@ -72,7 +72,7 @@ const invalidOptionMessage = computed((): string | undefined => {
     return 'Option not available';
   }
 
-  return;
+  return undefined;
 });
 
 function closeSelections(): void {
@@ -82,9 +82,9 @@ function closeSelections(): void {
 
 function selectOption(option: string): void {
   searchQuery.value = '';
-  emit("add", option);
+  emit('add', option);
 
-  searchRef.value.focus()
+  searchRef.value.focus();
 }
 </script>
 
