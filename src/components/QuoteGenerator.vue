@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="handleFormSubmit">
     <div class='form-value__container'>
       <label for='num-of-doors'>Number of doors:</label>
       <input v-model='doors' type='number' min='1' max='1000' id='num-of-doors' required/>
@@ -153,7 +153,7 @@ import {
 const doors = ref<number>(1);
 const isPanelsOnlyOrder = ref<boolean>(false);
 const selectedDoorWidth = ref<string | null>(null);
-const selectedDoorHeight = ref<string | null>(null);
+const selectedDoorHeight = ref<string>("");
 const selectedStampPattern = ref<string | null>(null);
 const selectedPanelColor = ref<string | null>(null);
 const hasWindows = ref<boolean>(false);
@@ -195,6 +195,119 @@ const displayDoorHeights = computed((): Array<string> => {
 function updateExtrasList(extra: string): void {
   selectedExtras.value.push(extra);
 }
+
+const handleFormSubmit = () => {
+ 
+  console.log('Form submitted!');
+  console.log('Number of doors:', doors.value);
+  console.log('Is Panels Only Order:', isPanelsOnlyOrder.value);
+
+
+  // Call function to calculate quote
+  calculateQuote();
+
+};
+
+// Helper function to get the stamp pattern suffix
+function getStampPatternSuffix(stampPattern: string | null): string {
+  const suffixes: Record<string, string> = {
+    FLUSH: '0',
+    SH: '1',
+    BC: '2',
+    TRAFALGAR: '3',
+    SHXL: '4',
+    BCXL: '5',
+  };
+
+  return suffixes[stampPattern] || '';
+}
+
+// Helper function to get the panel color suffix
+function getPanelColorSuffix(panelColor: string | null): string {
+  const suffixes: Record<string, string> = {
+    WHITE: '00',
+    SANDTONE: '04',
+    BLACK: '05',
+    BRONZE: '06',
+    'NEW BROWN': '10',
+    'STEEL GREY': '20',
+    'NEW ALMOND': '30',
+    WALNUT: '51',
+    HAZELWOOD: '40',
+  };
+
+  return suffixes[panelColor] || '';
+}
+
+const generatePanelPartNumber = (
+  bulkPanelsValue: boolean,
+  doorHeightValue: string,
+  doorWidthValue: string | null,
+  numberOfDoorsValue: number | null,
+  stampPatternValue: string | null,
+  panelColorValue: string | null
+): string => {
+  // Define the bulk panel prefix
+  const bulkPanelPrefix = bulkPanelsValue === true ? 'PN60' : 'PN65';
+
+  // Extract door height suffix
+  const doorHeightSuffix = doorHeightValue;
+
+  // Extract the first two characters of door width as door width suffix
+  const doorWidthSuffix = doorWidthValue.substring(0, 2);
+
+  const panelsTable: Record<string, Record<string, number>> = {
+      "06'0": { "18": 0, "21": 0, "24": 3 },
+      "06'3": { "18": 3, "21": 1, "24": 0 },
+      "06'6": { "18": 2, "21": 2, "24": 0 },
+      "06'9": { "18": 1, "21": 3, "24": 0 },
+      "07'0": { "18": 0, "21": 4, "24": 0 },
+      "07'3": { "18": 0, "21": 3, "24": 1 },
+      "07'6": { "18": 0, "21": 2, "24": 2 },
+      "07'9": { "18": 0, "21": 1, "24": 3 },
+      "08'0": { "18": 0, "21": 0, "24": 4 },
+      "08'3": { "18": 2, "21": 3, "24": 0 },
+      "08'6": { "18": 1, "21": 4, "24": 0 },
+      "08'9": { "18": 0, "21": 5, "24": 0 },
+      "09'0": { "18": 0, "21": 4, "24": 1 },
+      "09'3": { "18": 0, "21": 3, "24": 2 },
+      "09'6": { "18": 0, "21": 2, "24": 3 },
+      "09'9": { "18": 0, "21": 1, "24": 4 },
+      "10'0": { "18": 0, "21": 0, "24": 5 },
+      "10'3": { "18": 1, "21": 5, "24": 0 },
+      "10'6": { "18": 0, "21": 6, "24": 0 },
+      "10'9": { "18": 0, "21": 5, "24": 1 },
+      "11'0": { "18": 0, "21": 4, "24": 2 },
+      "11'3": { "18": 0, "21": 3, "24": 3 },
+      "11'6": { "18": 0, "21": 2, "24": 4 },
+      "11'9": { "18": 0, "21": 1, "24": 5 },
+      "12'0": { "18": 0, "21": 0, "24": 6 }
+  };
+  console.log(`door height- ${doorHeightSuffix}`)
+  const panelWidths = Object.keys(panelsTable[doorHeightSuffix] || {});
+  const partNumbers: string[] = [];
+ // FIXME: PanelWidths not populating as expected.
+ // console.log(`panelwidths- ${Object.keys(panelsTable[doorHeightSuffix] || {})}`);
+
+  panelWidths.forEach((panelWidth) => {
+    const panelWidthSuffix = panelWidth.padStart(2, '0');
+    const panelCount = panelsTable[doorHeightSuffix][panelWidth];
+    //console.log(`panelCount- ${panelCount}`)//testing
+    if (panelCount > 0) {
+      const partNumber = `${bulkPanelPrefix}-${panelWidthSuffix}${getStampPatternSuffix(stampPatternValue)}${getPanelColorSuffix(panelColorValue)}-${doorWidthSuffix}00`;
+      partNumbers.push(partNumber);
+    }
+  });
+
+  console.log(`Your quote: Panel Part Numbers - ${partNumbers.join(', ')}.`)
+  return partNumbers.join(', ');
+
+};
+
+const calculateQuote = () => {
+  const panelPartNumber = generatePanelPartNumber(isPanelsOnlyOrder.value, selectedDoorHeight.value, selectedDoorWidth.value, doors.value, selectedStampPattern.value, selectedPanelColor.value);
+};
+
 </script>
 
 <style scoped lang='scss'>
