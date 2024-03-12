@@ -1,5 +1,5 @@
 <template>
-  <div class='container'>
+  <div class='lib container'>
     <label :for='inputId'>{{ label }}</label>
 
     <div class='field'>
@@ -80,7 +80,7 @@ function inputChangeHandler(value: string): void {
   .field {
     display: flex;
     height: 34px;
-    border: 1px solid black;
+    border: 1px solid #CACED1;
     border-radius: 4px;
 
     .field__input {

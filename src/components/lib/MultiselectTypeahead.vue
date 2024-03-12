@@ -1,5 +1,5 @@
 <template>
-  <div class='container'>
+  <div class='lib container'>
     <label :for='inputId'>{{ label }}</label>
     <br>
     <div class='field'>
@@ -94,7 +94,7 @@ function selectOption(option: string): void {
     display: flex;
     align-items: center;
     height: 34px;
-    border: 1px solid black;
+    border: 1px solid #CACED1;
     border-radius: 4px;
 
     input {
@@ -113,12 +113,13 @@ function selectOption(option: string): void {
       width: 20px;
       height: 20px;
       background: none;
-      border: 1px solid black;
+      border: 1px solid #CACED1;
       border-radius: 50%;
       margin-right: 10px;
 
       svg {
         margin-top: 1px;
+        filter: invert(92%) sepia(7%) saturate(120%) hue-rotate(163deg) brightness(90%) contrast(90%);
       }
     }
   }
