@@ -179,7 +179,7 @@ const selectedTrackRadius = ref<number | null>(null);
 const chosenTrackRadius = ref<number | null>(null);
 const selectedTrackType = ref<string | null>(null);
 const chosenSpecialTrackRequest = ref<string | null>(null);
-const extensionHeight = ref<number>(1);
+const extensionHeight = ref<number | null>(1);
 const selectedExtras = ref<Array<string>>(hardwareExtras);
 
 const displayDoorWidths = computed((): Array<string> => {
@@ -187,7 +187,7 @@ const displayDoorWidths = computed((): Array<string> => {
 });
 
 const displayDoorHeights = computed((): Array<string> => {
-  const heights = [];
+  const heights: Array<string> = [];
 
   doorMeasurementsOptions.heightOptions.forEach((heightOptions) => {
     const foot = `${heightOptions.foot}'`;
