@@ -48,9 +48,9 @@ export interface Emits {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const inputId = ref(`input-${props.label.toLowerCase().replaceAll(' ', '-')}`);
-const searchRef = ref(null);
-const searchQuery = ref<string | null>('');
+const inputId = ref(`input-${props.label.toLowerCase().replace(/ /g, '-')}`);
+const searchRef = ref();
+const searchQuery = ref<string>('');
 const isSearchingOptions = ref<boolean>(false);
 
 const filteredOptions = computed((): Array<string> => {

@@ -12,7 +12,7 @@
         :min='min'
         :max='max'
         :required='required'
-        @input='inputChangeHandler($event.target.value)'
+        @input='inputChangeHandler(($event.target as HTMLInputElement)?.value)'
       />
       <p v-if='suffix' class='field__suffix'>{{ suffix }}</p>
     </div>
@@ -36,13 +36,13 @@ export interface Props {
 }
 
 interface Emits {
-  (eventName: 'change', value: number): void
+  (eventName: 'change', value: number | null): void
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const inputId = ref(`input-${props.label.toLowerCase().replaceAll(' ', '-')}`);
+const inputId = ref(`input-${props.label.toLowerCase().replace(/ /g, '-')}`);
 
 const errorMessage = computed((): string | undefined => {
   if (!props.value) {
