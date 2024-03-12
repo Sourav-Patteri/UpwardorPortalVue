@@ -243,7 +243,6 @@ const chosenFrameSize = ref<string | null>(null);
 const selectedGlazingType = ref<string | null>(null);
 const selectedInsertType = ref<string | null>(null);
 const areTracksRequired = ref<boolean>(false);
-const selectedTrackRadius = ref<number | null>(null);
 const chosenTrackRadius = ref<number | null>(null);
 const selectedTrackType = ref<string | null>(null);
 const chosenSpecialTrackRequest = ref<string | null>(null);
