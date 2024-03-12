@@ -19,31 +19,44 @@
     </div>
 
     <div class='form-value__container'>
-      <label for='door-width'>Door width:</label>
-      <select v-model='selectedDoorWidth' id='door-width'>
-        <option v-for='width in displayDoorWidths' :key='`w-key-${width}`'>{{ width }}</option>
-      </select>
+      <form-select
+        label='Door width'
+        :options='displayDoorWidths'
+        :selected='selectedDoorWidth'
+        @select='(...v) => { selectedDoorWidth = v[0] }'
+      >
+      </form-select>
     </div>
 
     <div class='form-value__container'>
-      <label for='door-height'>Door height:</label>
-      <select v-model='selectedDoorHeight' id='door-height'>
-        <option v-for='height in displayDoorHeights' :key='`h-key-${height}`'>{{ height }}</option>
-      </select>
+      <form-select
+        label='Door height'
+        :options='displayDoorHeights'
+        :selected='selectedDoorHeight'
+        @select='(...v) => { selectedDoorHeight = v[0] }'
+      >
+      </form-select>
     </div>
 
     <div class='form-value__container'>
-      <label for='stamp-pattern'>Stamp Pattern:</label>
-      <select v-model='selectedStampPattern' id='stamp-pattern'>
-        <option v-for='pattern in stampPatterns' :key='pattern.key' :value='pattern.key'>{{ pattern.displayName }}</option>
-      </select>
+      <form-select
+        label='Stamp Pattern'
+        :options='stampPatterns.map((s) => s.displayName)'
+        :values='stampPatterns.map((s) => s.key)'
+        :selected='selectedStampPattern'
+        @select='(...v) => { selectedStampPattern = v[0] }'
+      >
+      </form-select>
     </div>
 
     <div class='form-value__container'>
-      <label for='panel-color'>Panel Color</label>
-      <select v-model='selectedPanelColor' id='panel-color'>
-        <option v-for='color in panelColors' :key='color'>{{ color }}</option>
-      </select>
+      <form-select
+        label='Panel Color'
+        :options='panelColors'
+        :selected='selectedPanelColor'
+        @select='(...v) => { selectedPanelColor = v[0] }'
+      >
+      </form-select>
     </div>
 
     <div class='form-value__container'> <!-- FIXME: Verify this -->
@@ -65,17 +78,25 @@
     </div>
 
     <div class='form-value__container'>
-      <label for='glazing-type'>Glazing Type</label>
-      <select v-model='selectedGlazingType' id='glazing-type'>
-        <option v-for='gtype in glazingTypeOptions' :key='`g-type-${gtype.key}`' :value='gtype.key'>{{ gtype.displayName }}</option>
-      </select>
+      <form-select
+        label='Glazing Type'
+        :options='glazingTypeOptions.map((g) => g.displayName)'
+        :values='glazingTypeOptions.map((g) => g.key)'
+        :selected='selectedGlazingType'
+        @select='(...v) => { selectedGlazingType = v[0] }'
+      >
+      </form-select>
     </div>
 
     <div class='form-value__container'>
-      <label for='insert-type'>Insert Type</label>
-      <select v-model='selectedInsertType' id='insert-type'>
-        <option v-for='itype in insertTypeOptions' :key='`i-type-${itype.key}`' :value='itype.key'>{{ itype.displayName }}</option>
-      </select>
+      <form-select
+        label='Insert Type'
+        :options='insertTypeOptions.map((i) => i.displayName)'
+        :values='insertTypeOptions.map((i) => i.key)'
+        :selected='selectedInsertType'
+        @select='(...v) => { selectedInsertType = v[0] }'
+      >
+      </form-select>
     </div>
 
     <div class='form-value__container'>
@@ -93,10 +114,15 @@
       </div>
 
       <div class='form-value__container'>
-        <label for='track-type'>Track Type</label>
-        <select v-model='selectedTrackType' id='track-type'>
-          <option v-for='trackType in trackOptions.trackTypeOptions' :key='`t-type-${trackType.key}`' :value='trackType.key'>{{ trackType.displayName }}</option>
-        </select>
+      <form-select
+        label='Track Type'
+        label-position-top='top'
+        :options='trackOptions.trackTypeOptions.map((t) => t.displayName)'
+        :values='trackOptions.trackTypeOptions.map((t) => t.key)'
+        :selected='selectedTrackType'
+        @select='(...v) => { selectedTrackType = v[0] }'
+      >
+      </form-select>
       </div>
 
       <div class='form-value__container'>
@@ -146,6 +172,7 @@ import { computed, ref } from 'vue';
 
 import MultiselectTypeahead from '@/components/lib/MultiselectTypeahead.vue';
 import FormInput from '@/components/lib/FormInput.vue';
+import FormSelect from '@/components/lib/FormSelect.vue';
 import {
   doorMeasurementsOptions,
   stampPatterns,
