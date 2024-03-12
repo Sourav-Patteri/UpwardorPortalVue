@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleFormSubmit">
+  <form @submit.prevent='handleFormSubmit'>
     <div class='form-value__container'>
       <label for='num-of-doors'>Number of doors:</label>
       <input v-model='doors' type='number' min='1' max='1000' id='num-of-doors' required/>
@@ -153,7 +153,7 @@ import {
 const doors = ref<number>(1);
 const isPanelsOnlyOrder = ref<boolean>(false);
 const selectedDoorWidth = ref<string | null>(null);
-const selectedDoorHeight = ref<string>("");
+const selectedDoorHeight = ref<string>('');
 const selectedStampPattern = ref<string | null>(null);
 const selectedPanelColor = ref<string | null>(null);
 const hasWindows = ref<boolean>(false);
@@ -196,7 +196,7 @@ function updateExtrasList(extra: string): void {
   selectedExtras.value.push(extra);
 }
 
-const handleFormSubmit = () => {
+function handleFormSubmit() : void {
  
   console.log('Form submitted!');
   console.log('Number of doors:', doors.value);
@@ -204,22 +204,14 @@ const handleFormSubmit = () => {
 
 
   // Call function to calculate quote
-  calculateQuote();
+  const panelPartNumber = generatePanelPartNumber(isPanelsOnlyOrder.value, selectedDoorHeight.value, selectedDoorWidth.value, doors.value, selectedStampPattern.value, selectedPanelColor.value);
 
 };
 
 // Helper function to get the stamp pattern suffix
-function getStampPatternSuffix(stampPattern: string | null): string {
-  const suffixes: Record<string, string> = {
-    FLUSH: '0',
-    SH: '1',
-    BC: '2',
-    TRAFALGAR: '3',
-    SHXL: '4',
-    BCXL: '5',
-  };
-
-  return suffixes[stampPattern] || '';
+function getStampPatternSuffix(stampPattern: string | null): string | null {
+  const pattern = stampPatterns.find((p) => p.key === stampPattern);
+  return pattern ? pattern.value : null;
 }
 
 // Helper function to get the panel color suffix
@@ -302,10 +294,6 @@ const generatePanelPartNumber = (
   console.log(`Your quote: Panel Part Numbers - ${partNumbers.join(', ')}.`)
   return partNumbers.join(', ');
 
-};
-
-const calculateQuote = () => {
-  const panelPartNumber = generatePanelPartNumber(isPanelsOnlyOrder.value, selectedDoorHeight.value, selectedDoorWidth.value, doors.value, selectedStampPattern.value, selectedPanelColor.value);
 };
 
 </script>

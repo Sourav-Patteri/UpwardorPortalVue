@@ -13,6 +13,10 @@ export interface KeyValueSelect {
   displayName: string
 }
 
+export interface KeyDisplayNameValue extends KeyValueSelect {
+  value: string;
+}
+
 export interface TrackOptions {
   trackRadiusOptions: Array<number>
   trackTypeOptions: Array<KeyValueSelect>
@@ -39,13 +43,13 @@ export const doorMeasurementsOptions: DoorMeasurementsOptions = {
   heightOptions: doorHeights
 };
 
-export const stampPatterns: Array<KeyValueSelect> = [
-  { key: 'FLUSH', displayName: 'Flush' },
-  { key: 'TRAFALGAR', displayName: 'Trafalgar' },
-  { key: 'BC', displayName: 'Bronte Creek' },
-  { key: 'BCXL', displayName: 'Bronte Creek XL' },
-  { key: 'SH', displayName: 'Sheridan' },
-  { key: 'SHXL', displayName: 'Sheridan XL' }
+export const stampPatterns: Array<KeyDisplayNameValue> = [
+  { key: 'FLUSH', displayName: 'Flush', value: '0' },
+  { key: 'TRAFALGAR', displayName: 'Trafalgar', value: '3' },
+  { key: 'BC', displayName: 'Bronte Creek', value: '2' },
+  { key: 'BCXL', displayName: 'Bronte Creek XL', value: '5' },
+  { key: 'SH', displayName: 'Sheridan', value: '1' },
+  { key: 'SHXL', displayName: 'Sheridan XL', value: '4' },
 ];
 
 export const panelColors: Array<string> = [
