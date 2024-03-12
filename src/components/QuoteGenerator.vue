@@ -14,8 +14,12 @@
     </div>
 
     <div class='form-value__container'>
-      <input id='bulk-panels' type='checkbox' v-model='isPanelsOnlyOrder'/>
-      <label for='bulk-panels'>Panels Only (Bulk)</label>
+      <control-input
+        label='Panels Only (Bulk)'
+        :checked='isPanelsOnlyOrder'
+        @toggle='isPanelsOnlyOrder = !isPanelsOnlyOrder'
+      >
+      </control-input>
     </div>
 
     <div class='form-value__container'>
@@ -60,12 +64,20 @@
     </div>
 
     <div class='form-value__container'> <!-- FIXME: Verify this -->
-      <input id='has-windows' type='checkbox' v-model='hasWindows'/>
-      <label for='has-windows'>Windows</label>
+      <control-input
+        label='Windows'
+        :checked='hasWindows'
+        @toggle='hasWindows = !hasWindows'
+      >
+      </control-input>
 
       <span v-if='hasWindows'>
-        <input id='is-vertical-configuration' type='checkbox' v-model='isVerticalConfiguration'/>
-        <label for='is-vertical-configuration'>Vertical Configuration</label>
+      <control-input
+        label='Vertical Configuration'
+        :checked='isVerticalConfiguration'
+        @toggle='isVerticalConfiguration = !isVerticalConfiguration'
+      >
+      </control-input>
       </span>
     </div>
 
@@ -100,8 +112,12 @@
     </div>
 
     <div class='form-value__container'>
-      <input id='are-tracks-req' type='checkbox' v-model='areTracksRequired'/>
-      <label for='are-tracks-req'>Are tracks required?</label>
+      <control-input
+        label='Are tracks required?'
+        :checked='areTracksRequired'
+        @toggle='areTracksRequired = !areTracksRequired'
+      >
+      </control-input>
     </div>
 
     <div v-if='areTracksRequired'>
@@ -173,6 +189,7 @@ import { computed, ref } from 'vue';
 import MultiselectTypeahead from '@/components/lib/MultiselectTypeahead.vue';
 import FormInput from '@/components/lib/FormInput.vue';
 import FormSelect from '@/components/lib/FormSelect.vue';
+import ControlInput from '@/components/lib/ControlInput.vue';
 import {
   doorMeasurementsOptions,
   stampPatterns,
