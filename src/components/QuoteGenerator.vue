@@ -161,7 +161,7 @@ import {
 enum OptionsUpdateMethod {
   add = 'ADD',
   remove = 'REMOVE'
-};
+}
 
 const doors = ref<number | null>(1);
 const isPanelsOnlyOrder = ref<boolean>(false);
@@ -213,14 +213,14 @@ function updateExtensionHeightValue(value: number | null): void {
 }
 
 function updateSelectedExtras(extra: string, updateMethod: OptionsUpdateMethod): void {
-  switch(updateMethod) {
+  switch (updateMethod) {
     case OptionsUpdateMethod.add:
       selectedExtras.value.push(extra);
       break;
 
     case OptionsUpdateMethod.remove:
       selectedExtras.value = selectedExtras.value.filter((v) => v !== extra);
-  };
+  }
 }
 </script>
 
