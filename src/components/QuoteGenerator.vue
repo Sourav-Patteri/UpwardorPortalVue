@@ -84,8 +84,14 @@
     <div class='form-value__container'>
       <p>Frame Size:</p>
       <span v-for='size in frameSizes' :key='`s-${size}`'>
-        <input :id='`frame-size-${size}`' type='radio' :value='size.toLowerCase()' v-model='chosenFrameSize'>
-        <label :for='`frame-size-${size}`'>{{ size }}</label>
+        <control-input
+          radio-control
+          :label='size'
+          :checked='chosenFrameSize === size'
+          :value='size'
+          @check='(...v) => { chosenFrameSize = v[0] }'
+        >
+        </control-input>
       </span>
     </div>
 
@@ -124,8 +130,14 @@
       <div class='form-value__container'>
         <p>Track Radius</p>
         <span v-for='radius in trackOptions.trackRadiusOptions' :key='`tr-${radius}`'>
-          <input :id='`track-radius-${radius}`' type='radio' :value='radius' v-model='chosenTrackRadius' />
-          <label :for='`track-radius-${radius}`'>{{ radius }}</label>
+        <control-input
+          radio-control
+          :label='radius.toString()'
+          :checked='chosenTrackRadius === radius'
+          :value='radius'
+          @check='(...v) => { chosenTrackRadius = v[0] }'
+        >
+        </control-input>
         </span>
       </div>
 
@@ -144,11 +156,23 @@
       <div class='form-value__container'>
         <p>Special Track Request</p>
 
-        <input id='str-none' type='radio' :value='null' v-model='chosenSpecialTrackRequest' />
-        <label for='str-none'>Not required</label>
+        <control-input
+          radio-control
+          label='Not required'
+          :checked='chosenSpecialTrackRequest === null'
+          :value='null'
+          @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
+        >
+        </control-input>
         <span v-for='specialTrack in trackOptions.specialTrackRequestOptions' :key='`str-${specialTrack.key}`'>
-          <input :id='`str-${specialTrack.key}`' type='radio' :value='specialTrack.key' v-model='chosenSpecialTrackRequest' />
-          <label :for='`str-${specialTrack.key}`'>{{ specialTrack.displayName }}</label>
+          <control-input
+            radio-control
+            :label='specialTrack.displayName'
+            :checked='chosenSpecialTrackRequest === specialTrack.key'
+            :value='specialTrack.key'
+            @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
+          >
+          </control-input>
         </span>
       </div>
     </div>
