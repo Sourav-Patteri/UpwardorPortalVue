@@ -4,7 +4,7 @@
       :id='controlId'
       :type='radioControl ? "radio" : "checkbox"'
       :checked='checked'
-      @click='radioControl ? emit("check", value) : emit("toggle")'
+      @click='radioControl ? emit("check", value ?? null) : emit("toggle")'
     />
 
     <label :for='controlId'>{{ label }}</label>
@@ -18,13 +18,13 @@ import { ref } from 'vue';
 export interface Props {
   label: string
   checked: boolean
-  value?: string | number | null
+  value?: string | null
   radioControl?: boolean
 }
 
 export interface Emits {
   (eventName: 'toggle'): void,
-  (eventName: 'check', value: string | number | null): void
+  (eventName: 'check', value: string | null): void
 }
 
 const props = defineProps<Props>();

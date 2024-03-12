@@ -132,10 +132,10 @@
         <span v-for='radius in trackOptions.trackRadiusOptions' :key='`tr-${radius}`'>
         <control-input
           radio-control
-          :label='radius.toString()'
+          :label='`${radius}`'
           :checked='chosenTrackRadius === radius'
-          :value='radius'
-          @check='(...v) => { chosenTrackRadius = v[0] }'
+          :value='`${radius}`'
+          @check='(...v) => { chosenTrackRadius = Number(v[0]) }'
         >
         </control-input>
         </span>
