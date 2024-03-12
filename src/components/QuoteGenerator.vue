@@ -116,7 +116,7 @@
       <div class='form-value__container'>
       <form-select
         label='Track Type'
-        label-position-top='top'
+        label-position-top
         :options='trackOptions.trackTypeOptions.map((t) => t.displayName)'
         :values='trackOptions.trackTypeOptions.map((t) => t.key)'
         :selected='selectedTrackType'
