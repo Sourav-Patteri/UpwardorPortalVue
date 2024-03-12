@@ -5,6 +5,7 @@
     <div class='field'>
       <input
         class='field__input'
+        type='number'
         :placeholder='placeholder'
         :value='value'
         :id='inputId'
@@ -90,6 +91,12 @@ function inputChangeHandler(value: string): void {
       &:focus {
         outline: none;
       }
+    }
+
+    input[type='number'] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+      -webkit-appearance: textfield;
     }
 
     .field__suffix {
