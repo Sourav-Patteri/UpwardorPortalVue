@@ -147,7 +147,8 @@ import {
   insertTypeOptions,
   trackOptions,
   hardwareExtras,
-  panelsTable
+  panelsTable,
+  bottomRetainerParts
 } from '@/models/orders';
 
 
@@ -202,11 +203,13 @@ function handleFormSubmit() : void {
   // Call function to calculate quote
   const panelPartNumber = generatePanelPartNumber(isPanelsOnlyOrder.value, selectedDoorHeight.value, selectedDoorWidth.value, doors.value, selectedStampPattern.value, selectedPanelColor.value);
 
+  const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value.substring(0, 2)];
+  console.log(`Your quote: Panel Part Numbers - ${panelPartNumber}. The Bottom Retainer part number is- ${bottomRetainerPart}. `);
 };
 
 const generatePanelPartNumber = (
   bulkPanelsValue: boolean,
-  doorHeightValue: string,
+  doorHeightValue: string | null,
   doorWidthValue: string | null,
   numberOfDoorsValue: number | null,
   stampPatternValue: string | null,
@@ -233,7 +236,6 @@ const generatePanelPartNumber = (
       partNumbers.push(partNumber);
     }
   });
-  console.log(`Your quote: Panel Part Numbers - ${partNumbers.join(', ')}.`)
   return partNumbers.join(', ');
 
 };

@@ -66,6 +66,20 @@ export const panelsTable: Record<string, Record<string, number>> = {
   '12\'0"': { '18': 0, '21': 0, '24': 6 }
 };
 
+export const bottomRetainerParts: Record<string, string> = {
+    '07': 'PL10-00145-07',
+    '08': 'PL10-00145-01',
+    '09': 'PL10-00146-00',
+    '10': 'PL10-00146-00',
+    '11': 'PL10-00149-00',
+    '12': 'PL10-00149-00',
+    '13': 'PL10-00146-01',
+    '14': 'PL10-00146-01',
+    '15': 'PL10-00146-01',
+    '16': 'PL10-00146-01',
+    '18': 'PL10-00150-00',
+  };
+
 export const doorMeasurementsOptions: DoorMeasurementsOptions = {
   widthOptions: doorWidths,
   heightOptions: doorHeights
