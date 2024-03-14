@@ -200,31 +200,31 @@ function updateExtrasList(extra: string): void {
 
 const panelPartNumber = computed((): string => {
 
-      // Define the bulk panel prefix
-      const bulkPanelPrefix = isPanelsOnlyOrder.value ? 'PN60' : 'PN65';
+  // Define the bulk panel prefix
+  const bulkPanelPrefix = isPanelsOnlyOrder.value ? 'PN60' : 'PN65';
 
-      // Extract door height suffix
-      const doorHeightSuffix = selectedDoorHeight.value;
-  
-      // Extract the first two characters of door width as door width suffix
-      const doorWidthSuffix = selectedDoorWidth.value.substring(0, 2);
-  
-      const panelWidths = Object.keys(panelsTable[doorHeightSuffix] || {});
-  
-      const partNumbers: string[] = [];
-  
-      panelWidths.forEach((panelWidth) => {
-        const panelWidthSuffix = panelWidth.padStart(2, '0');
-        const panelCount = panelsTable[doorHeightSuffix][panelWidth];
+  // Extract door height suffix
+  const doorHeightSuffix = selectedDoorHeight.value;
 
-        if (panelCount > 0) {
-          const partNumber = `${bulkPanelPrefix}-${panelWidthSuffix}${selectedStampPattern.value}${selectedPanelColor.value}-${doorWidthSuffix}00`;
-          partNumbers.push(partNumber);
-        }
-      });
+  // Extract the first two characters of door width as door width suffix
+  const doorWidthSuffix = selectedDoorWidth.value.substring(0, 2);
 
-      return partNumbers.join(', ');
-    });  
+  const panelWidths = Object.keys(panelsTable[doorHeightSuffix] || {});
+
+  const partNumbers: string[] = [];
+
+  panelWidths.forEach((panelWidth) => {
+    const panelWidthSuffix = panelWidth.padStart(2, '0');
+    const panelCount = panelsTable[doorHeightSuffix][panelWidth];
+
+    if (panelCount > 0) {
+      const partNumber = `${bulkPanelPrefix}-${panelWidthSuffix}${selectedStampPattern.value}${selectedPanelColor.value}-${doorWidthSuffix}00`;
+      partNumbers.push(partNumber);
+    }
+  });
+
+  return partNumbers.join(', ');
+});  
 
 function handleFormSubmit() : void {
  
