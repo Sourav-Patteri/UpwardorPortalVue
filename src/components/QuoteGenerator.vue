@@ -274,27 +274,7 @@ const displayDoorHeights = computed((): Array<string> => {
   return heights;
 });
 
-function updateDoorsValue(value: number | null): void {
-  doors.value = value;
-}
-
-function updateExtensionHeightValue(value: number | null): void {
-  extensionHeight.value = value;
-}
-
-function updateSelectedExtras(extra: string, updateMethod: OptionsUpdateMethod): void {
-  switch (updateMethod) {
-    case OptionsUpdateMethod.add:
-      selectedExtras.value.push(extra);
-      break;
-
-    case OptionsUpdateMethod.remove:
-      selectedExtras.value = selectedExtras.value.filter((v) => v !== extra);
-  }
-}
-
 const panelPartNumber = computed((): string => {
-
   // Define the bulk panel prefix
   const bulkPanelPrefix = isPanelsOnlyOrder.value ? 'PN60' : 'PN65';
 
@@ -321,8 +301,26 @@ const panelPartNumber = computed((): string => {
   return partNumbers.join(', ');
 });  
 
+function updateDoorsValue(value: number | null): void {
+  doors.value = value;
+}
+
+function updateExtensionHeightValue(value: number | null): void {
+  extensionHeight.value = value;
+}
+
+function updateSelectedExtras(extra: string, updateMethod: OptionsUpdateMethod): void {
+  switch (updateMethod) {
+    case OptionsUpdateMethod.add:
+      selectedExtras.value.push(extra);
+      break;
+
+    case OptionsUpdateMethod.remove:
+      selectedExtras.value = selectedExtras.value.filter((v) => v !== extra);
+  }
+}
+
 function handleFormSubmit() : void {
- 
     // Call function to calculate quote
   const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value.substring(0, 2)];
 
@@ -333,7 +331,6 @@ function handleFormSubmit() : void {
   // TODO: Decide and put in how to display the information. Tabular form?
   console.log(`Your quote: Panel Part Numbers - ${panelPartNumber.value}. The Bottom Retainer part number is- ${bottomRetainerPart}. The Astragal is PL10-00005-01. The Glazing Kit is ${glazingKitPart}`);
 }
-
 </script>
 
 <style scoped lang='scss'>
