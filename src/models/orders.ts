@@ -13,6 +13,10 @@ export interface KeyValueSelect {
   displayName: string
 }
 
+export interface KeyDisplayNameValue extends KeyValueSelect {
+  value: string;
+}
+
 export interface TrackOptions {
   trackRadiusOptions: Array<number>
   trackTypeOptions: Array<KeyValueSelect>
@@ -34,22 +38,72 @@ const doorHeights: Array<MeasurementOptions> = [
   { foot: '12', inches: [ '0' ] }
 ];
 
+export const panelsTable: Record<string, Record<string, number>> = {
+  '06\'0"': { '18': 0, '21': 0, '24': 3 },
+  '06\'3"': { '18': 3, '21': 1, '24': 0 },
+  '06\'6"': { '18': 2, '21': 2, '24': 0 },
+  '06\'9"': { '18': 1, '21': 3, '24': 0 },
+  '07\'0"': { '18': 0, '21': 4, '24': 0 },
+  '07\'3"': { '18': 0, '21': 3, '24': 1 },
+  '07\'6"': { '18': 0, '21': 2, '24': 2 },
+  '07\'9"': { '18': 0, '21': 1, '24': 3 },
+  '08\'0"': { '18': 0, '21': 0, '24': 4 },
+  '08\'3"': { '18': 2, '21': 3, '24': 0 },
+  '08\'6"': { '18': 1, '21': 4, '24': 0 },
+  '08\'9"': { '18': 0, '21': 5, '24': 0 },
+  '09\'0"': { '18': 0, '21': 4, '24': 1 },
+  '09\'3"': { '18': 0, '21': 3, '24': 2 },
+  '09\'6"': { '18': 0, '21': 2, '24': 3 },
+  '09\'9"': { '18': 0, '21': 1, '24': 4 },
+  '10\'0"': { '18': 0, '21': 0, '24': 5 },
+  '10\'3"': { '18': 1, '21': 5, '24': 0 },
+  '10\'6"': { '18': 0, '21': 6, '24': 0 },
+  '10\'9"': { '18': 0, '21': 5, '24': 1 },
+  '11\'0"': { '18': 0, '21': 4, '24': 2 },
+  '11\'3"': { '18': 0, '21': 3, '24': 3 },
+  '11\'6"': { '18': 0, '21': 2, '24': 4 },
+  '11\'9"': { '18': 0, '21': 1, '24': 5 },
+  '12\'0"': { '18': 0, '21': 0, '24': 6 }
+};
+
+export const bottomRetainerParts: Record<string, string> = {
+    '07': 'PL10-00145-07',
+    '08': 'PL10-00145-01',
+    '09': 'PL10-00146-00',
+    '10': 'PL10-00146-00',
+    '11': 'PL10-00149-00',
+    '12': 'PL10-00149-00',
+    '13': 'PL10-00146-01',
+    '14': 'PL10-00146-01',
+    '15': 'PL10-00146-01',
+    '16': 'PL10-00146-01',
+    '18': 'PL10-00150-00',
+  };
+
 export const doorMeasurementsOptions: DoorMeasurementsOptions = {
   widthOptions: doorWidths,
   heightOptions: doorHeights
 };
 
-export const stampPatterns: Array<KeyValueSelect> = [
-  { key: 'FLUSH', displayName: 'Flush' },
-  { key: 'TRAFALGAR', displayName: 'Trafalgar' },
-  { key: 'BC', displayName: 'Bronte Creek' },
-  { key: 'BCXL', displayName: 'Bronte Creek XL' },
-  { key: 'SH', displayName: 'Sheridan' },
-  { key: 'SHXL', displayName: 'Sheridan XL' }
+export const stampPatterns: Array<KeyDisplayNameValue> = [
+  { key: 'FLUSH', displayName: 'Flush', value: '0' },
+  { key: 'TRAFALGAR', displayName: 'Trafalgar', value: '3' },
+  { key: 'BC', displayName: 'Bronte Creek', value: '2' },
+  { key: 'BCXL', displayName: 'Bronte Creek XL', value: '5' },
+  { key: 'SH', displayName: 'Sheridan', value: '1' },
+  { key: 'SHXL', displayName: 'Sheridan XL', value: '4' },
 ];
 
-export const panelColors: Array<string> = [
-  'WHITE', 'SANDTONE', 'BLACK', 'BRONZE', 'NEW BROWN', 'STEEL GREY', 'NEW ALMOND', 'WALNUT'
+export const panelColors: Array<KeyDisplayNameValue> = [
+  { key: 'WHITE', displayName: 'WHITE', value: '00'},                                                       
+  { key: 'SANDTONE', displayName: 'SANDTONE', value: '04'},
+  { key: 'BLACK', displayName: 'BLACK', value: '05'},
+  { key: 'BRONZE', displayName: 'BRONZE', value: '06'},
+  { key: 'NEW BROWN', displayName: 'NEW BROWN', value: '10'},
+  { key: 'STEEL GREY', displayName: 'STEEL GREY', value: '20'},
+  { key: 'NEW ALMOND', displayName: 'NEW ALMOND', value: '30'},
+  { key: 'WALNUT', displayName: 'WALNUT', value: '51'},
+  { key: 'HAZELWOOD', displayName: 'HAZELWOOD', value: '40'}
 ];
 
 export const frameSizes: Array<string> = [ 'Long', 'Short' ];

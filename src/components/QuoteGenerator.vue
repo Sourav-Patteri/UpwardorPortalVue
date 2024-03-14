@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent='handleFormSubmit'>
     <div class='form-value__container'>
       <form-input
         required
@@ -46,7 +46,7 @@
       <form-select
         label='Stamp Pattern'
         :options='stampPatterns.map((s) => s.displayName)'
-        :values='stampPatterns.map((s) => s.key)'
+        :values='stampPatterns.map((s) => s.value)'
         :selected='selectedStampPattern'
         @select='(...v) => { selectedStampPattern = v[0] }'
       >
@@ -56,7 +56,8 @@
     <div class='form-value__container'>
       <form-select
         label='Panel Color'
-        :options='panelColors'
+        :options='panelColors.map((c) => c.displayName)'
+        :values='panelColors.map((c) => c.value)'
         :selected='selectedPanelColor'
         @select='(...v) => { selectedPanelColor = v[0] }'
       >
@@ -222,7 +223,9 @@ import {
   glazingTypeOptions,
   insertTypeOptions,
   trackOptions,
-  hardwareExtras
+  hardwareExtras,
+  panelsTable,
+  bottomRetainerParts
 } from '@/models/orders';
 
 
@@ -289,6 +292,48 @@ function updateSelectedExtras(extra: string, updateMethod: OptionsUpdateMethod):
       selectedExtras.value = selectedExtras.value.filter((v) => v !== extra);
   }
 }
+
+const panelPartNumber = computed((): string => {
+
+  // Define the bulk panel prefix
+  const bulkPanelPrefix = isPanelsOnlyOrder.value ? 'PN60' : 'PN65';
+
+  // Extract door height suffix
+  const doorHeightSuffix = selectedDoorHeight.value;
+
+  // Extract the first two characters of door width as door width suffix
+  const doorWidthSuffix = selectedDoorWidth.value.substring(0, 2);
+
+  const panelWidths = Object.keys(panelsTable[doorHeightSuffix] || {});
+
+  const partNumbers: string[] = [];
+
+  panelWidths.forEach((panelWidth) => {
+    const panelWidthSuffix = panelWidth.padStart(2, '0');
+    const panelCount = panelsTable[doorHeightSuffix][panelWidth];
+
+    if (panelCount > 0) {
+      const partNumber = `${bulkPanelPrefix}-${panelWidthSuffix}${selectedStampPattern.value}${selectedPanelColor.value}-${doorWidthSuffix}00`;
+      partNumbers.push(partNumber);
+    }
+  });
+
+  return partNumbers.join(', ');
+});  
+
+function handleFormSubmit() : void {
+ 
+    // Call function to calculate quote
+  const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value.substring(0, 2)];
+
+  const frameTypeNum = chosenFrameSize.value === 'short' ? 0 : 1;
+
+  const glazingKitPart = `GK15-1${frameTypeNum}${selectedPanelColor.value}-00`;
+
+  // TODO: Decide and put in how to display the information. Tabular form?
+  console.log(`Your quote: Panel Part Numbers - ${panelPartNumber.value}. The Bottom Retainer part number is- ${bottomRetainerPart}. The Astragal is PL10-00005-01. The Glazing Kit is ${glazingKitPart}`);
+}
+
 </script>
 
 <style scoped lang='scss'>
