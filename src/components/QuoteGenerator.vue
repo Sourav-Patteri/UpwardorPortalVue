@@ -200,8 +200,34 @@ function updateExtrasList(extra: string): void {
 
 function handleFormSubmit() : void {
  
-  // Call function to calculate quote
-  const panelPartNumber = generatePanelPartNumber(isPanelsOnlyOrder.value, selectedDoorHeight.value, selectedDoorWidth.value, doors.value, selectedStampPattern.value, selectedPanelColor.value);
+    // Call function to calculate quote
+    const panelPartNumber = computed((): string => {
+      
+    // Define the bulk panel prefix
+    const bulkPanelPrefix = isPanelsOnlyOrder.value ? 'PN60' : 'PN65';
+
+    // Extract door height suffix
+    const doorHeightSuffix = selectedDoorHeight.value;
+
+    // Extract the first two characters of door width as door width suffix
+    const doorWidthSuffix = selectedDoorWidth.value.substring(0, 2);
+
+    const panelWidths = Object.keys(panelsTable[doorHeightSuffix] || {});
+
+    const partNumbers: string[] = [];
+
+    panelWidths.forEach((panelWidth) => {
+      const panelWidthSuffix = panelWidth.padStart(2, '0');
+      const panelCount = panelsTable[doorHeightSuffix][panelWidth];
+      
+      if (panelCount > 0) {
+        const partNumber = `${bulkPanelPrefix}-${panelWidthSuffix}${selectedStampPattern.value}${selectedPanelColor.value}-${doorWidthSuffix}00`;
+        partNumbers.push(partNumber);
+      }
+    });
+
+    return partNumbers.join(', ');
+  });
 
   const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value.substring(0, 2)];
 
@@ -210,40 +236,7 @@ function handleFormSubmit() : void {
   const glazingKitPart = `GK15-1${frameTypeNum}${selectedPanelColor.value}-00`
 
   // TODO: Decide and put in how to display the information. Tabular form?
-  console.log(`Your quote: Panel Part Numbers - ${panelPartNumber}. The Bottom Retainer part number is- ${bottomRetainerPart}. The Astragal is PL10-00005-01. The Glazing Kit is ${glazingKitPart}`);
-};
-
-const generatePanelPartNumber = (
-  bulkPanelsValue: boolean,
-  doorHeightValue: string | null,
-  doorWidthValue: string | null,
-  numberOfDoorsValue: number | null,
-  stampPatternValue: string | null,
-  panelColorValue: string | null
-): string => {
-  // Define the bulk panel prefix
-  const bulkPanelPrefix = bulkPanelsValue === true ? 'PN60' : 'PN65';
-
-  // Extract door height suffix
-  const doorHeightSuffix = doorHeightValue;
-
-  // Extract the first two characters of door width as door width suffix
-  const doorWidthSuffix = doorWidthValue.substring(0, 2);
-
-  const panelWidths = Object.keys(panelsTable[doorHeightSuffix] || {});
-
-  const partNumbers: string[] = [];
-
-  panelWidths.forEach((panelWidth) => {
-    const panelWidthSuffix = panelWidth.padStart(2, '0');
-    const panelCount = panelsTable[doorHeightSuffix][panelWidth];
-    if (panelCount > 0) {
-      const partNumber = `${bulkPanelPrefix}-${panelWidthSuffix}${stampPatternValue}${panelColorValue}-${doorWidthSuffix}00`;
-      partNumbers.push(partNumber);
-    }
-  });
-  return partNumbers.join(', ');
-
+  console.log(`Your quote: Panel Part Numbers - ${panelPartNumber.value}. The Bottom Retainer part number is- ${bottomRetainerPart}. The Astragal is PL10-00005-01. The Glazing Kit is ${glazingKitPart}`);
 };
 
 </script>

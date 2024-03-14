@@ -1,10 +1,10 @@
 <template>
-    <div class="logo-container">
-      <img src="@/assets/UpwardorLogo.png" alt="Logo">
+    <div class='logo-container'>
+      <img src='@/assets/UpwardorLogo.png' alt='Logo'>
     </div>
   </template>
   
-  <script lang="ts">
+  <script lang='ts'>
   import { defineComponent } from 'vue';
   
   export default defineComponent({
