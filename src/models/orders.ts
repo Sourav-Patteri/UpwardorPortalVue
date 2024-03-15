@@ -149,3 +149,8 @@ export const hardwareExtras: Array<string> = [
   'Shafts', 'Springs', 'Struts', 'Hardware Kits', 'Weather Stripping',
   'Decorative Hardware Parts', 'Astragal and Bottom Retainer'
 ];
+
+export const frameSizeNumber = {
+  short: 0,
+  long: 1
+};
