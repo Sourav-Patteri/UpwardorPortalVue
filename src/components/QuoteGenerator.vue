@@ -229,7 +229,8 @@ import {
   trackOptions,
   hardwareExtras,
   panelsTable,
-  bottomRetainerParts
+  bottomRetainerParts,
+  frameSizeNumber
 } from '@/models/orders';
 
 
@@ -283,12 +284,12 @@ const panelPartNumber = computed((): string => {
   const bulkPanelPrefix = isPanelsOnlyOrder.value ? 'PN60' : 'PN65';
 
   // Extract door height suffix
-  const doorHeightSuffix = selectedDoorHeight.value;
+  const doorHeightSuffix = selectedDoorHeight.value!;
 
   // Extract the first two characters of door width as door width suffix
-  const doorWidthSuffix = selectedDoorWidth.value.substring(0, 2);
+  const doorWidthSuffix = selectedDoorWidth.value!.substring(0, 2);
 
-  const panelWidths = Object.keys(panelsTable[doorHeightSuffix] || {});
+  const panelWidths = Object.keys(panelsTable[doorHeightSuffix]);
 
   const partNumbers: string[] = [];
 
@@ -306,6 +307,18 @@ const panelPartNumber = computed((): string => {
 });
 
 const isSubmitDisabled = computed((): boolean => {
+  if (!doors.value || !selectedDoorWidth.value || !selectedDoorHeight.value || !selectedStampPattern.value || !selectedPanelColor.value) {
+    return true;
+  }
+
+  if (hasWindows.value && (!selectedGlazingType.value || !selectedInsertType.value)) {
+    return true;
+  }
+
+  if (areTracksRequired.value && (!chosenTrackRadius || !selectedTrackType.value)) {
+    return true;
+  }
+
   return false;
 });
 
@@ -333,10 +346,9 @@ function handleFormSubmit(): void {
     return;
   }
 
-    // Call function to calculate quote
-  const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value.substring(0, 2)];
+  const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value!.substring(0, 2)];
 
-  const frameTypeNum = chosenFrameSize.value === 'short' ? 0 : 1;
+  const frameTypeNum = frameSizeNumber[chosenFrameSize.value];
 
   const glazingKitPart = `GK15-1${frameTypeNum}${selectedPanelColor.value}-00`;
 
