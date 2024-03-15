@@ -1,8 +1,9 @@
 <template>
   <form @submit.prevent='handleFormSubmit'>
-    <div class='form-value__container'>
+    <div class='form-row'>
       <form-input
         required
+        class='input-small'
         label='Number of doors'
         placeholder='Number of doors'
         :value='doors'
@@ -11,10 +12,30 @@
         @change='(...v) => updateDoorsValue(...v)'
       >
       </form-input>
-    </div>
 
-    <div class='form-value__container'>
+      <div class='form-row__field-group flex-max door-size-select-group'>
+        <p>Door measurements</p>
+        <div>
+          <form-select
+            label='Door width'
+            :options='displayDoorWidths'
+            :selected='selectedDoorWidth'
+            @select='(...v) => { selectedDoorWidth = v[0] }'
+          >
+          </form-select>
+
+          <form-select
+            label='Door height'
+            :options='displayDoorHeights'
+            :selected='selectedDoorHeight'
+            @select='(...v) => { selectedDoorHeight = v[0] }'
+          >
+          </form-select>
+        </div>
+      </div>
+
       <control-input
+        class='flex-small cb-panels'
         label='Panels Only (Bulk)'
         :checked='isPanelsOnlyOrder'
         @toggle='isPanelsOnlyOrder = !isPanelsOnlyOrder'
@@ -22,82 +43,63 @@
       </control-input>
     </div>
 
-    <div class='form-value__container'>
+    <div class='form-row'>
+      <div class='form-row__field-group flex-max'>
+        <p>Styles</p>
+
+        <div>
+          <form-select
+            class='val-select'
+            label='Stamp Pattern'
+            :options='stampPatterns.map((s) => s.displayName)'
+            :values='stampPatterns.map((s) => s.value)'
+            :selected='selectedStampPattern'
+            @select='(...v) => { selectedStampPattern = v[0] }'
+          >
+          </form-select>
+
+          <form-select
+            class='val-select'
+            label='Panel Color'
+            :options='panelColors.map((c) => c.displayName)'
+            :values='panelColors.map((c) => c.value)'
+            :selected='selectedPanelColor'
+            @select='(...v) => { selectedPanelColor = v[0] }'
+          >
+          </form-select>
+        </div>
+      </div>
+
+      <div class='form-row__field-group flex-small frame-radio-group'>
+        <p>Frame Size</p>
+        <div>
+          <span v-for='size in frameSizes' :key='`s-${size}`'>
+            <control-input
+              radio-control
+              :label='size'
+              :checked='chosenFrameSize === size'
+              :value='size'
+              @check='(...v) => { chosenFrameSize = v[0] }'
+            >
+            </control-input>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class='form-row'>
+      <div class='form-row__field-group window-cb-group'>
+        <div class='group-gap-min'>
+          <control-input label='Windows' :checked='hasWindows' @toggle='hasWindows = !hasWindows'>
+          </control-input>
+
+          <control-input label='Vertical Configuration' :checked='isVerticalConfiguration' @toggle='isVerticalConfiguration = !isVerticalConfiguration'>
+          </control-input>
+        </div>
+      </div>
+
       <form-select
-        label='Door width'
-        :options='displayDoorWidths'
-        :selected='selectedDoorWidth'
-        @select='(...v) => { selectedDoorWidth = v[0] }'
-      >
-      </form-select>
-    </div>
-
-    <div class='form-value__container'>
-      <form-select
-        label='Door height'
-        :options='displayDoorHeights'
-        :selected='selectedDoorHeight'
-        @select='(...v) => { selectedDoorHeight = v[0] }'
-      >
-      </form-select>
-    </div>
-
-    <div class='form-value__container'>
-      <form-select
-        label='Stamp Pattern'
-        :options='stampPatterns.map((s) => s.displayName)'
-        :values='stampPatterns.map((s) => s.value)'
-        :selected='selectedStampPattern'
-        @select='(...v) => { selectedStampPattern = v[0] }'
-      >
-      </form-select>
-    </div>
-
-    <div class='form-value__container'>
-      <form-select
-        label='Panel Color'
-        :options='panelColors.map((c) => c.displayName)'
-        :values='panelColors.map((c) => c.value)'
-        :selected='selectedPanelColor'
-        @select='(...v) => { selectedPanelColor = v[0] }'
-      >
-      </form-select>
-    </div>
-
-    <div class='form-value__container'> <!-- FIXME: Verify this -->
-      <control-input
-        label='Windows'
-        :checked='hasWindows'
-        @toggle='hasWindows = !hasWindows'
-      >
-      </control-input>
-
-      <span v-if='hasWindows'>
-      <control-input
-        label='Vertical Configuration'
-        :checked='isVerticalConfiguration'
-        @toggle='isVerticalConfiguration = !isVerticalConfiguration'
-      >
-      </control-input>
-      </span>
-    </div>
-
-    <div class='form-value__container'>
-      <p>Frame Size:</p>
-      <span v-for='size in frameSizes' :key='`s-${size}`'>
-        <control-input
-          radio-control
-          :label='size'
-          :checked='chosenFrameSize === size'
-          :value='size'
-          @check='(...v) => { chosenFrameSize = v[0] }'
-        >
-        </control-input>
-      </span>
-    </div>
-
-    <div class='form-value__container'>
-      <form-select
+        class='val-select'
         label='Glazing Type'
         :options='glazingTypeOptions.map((g) => g.displayName)'
         :values='glazingTypeOptions.map((g) => g.key)'
@@ -105,10 +107,9 @@
         @select='(...v) => { selectedGlazingType = v[0] }'
       >
       </form-select>
-    </div>
 
-    <div class='form-value__container'>
       <form-select
+        class='val-select'
         label='Insert Type'
         :options='insertTypeOptions.map((i) => i.displayName)'
         :values='insertTypeOptions.map((i) => i.key)'
@@ -118,68 +119,72 @@
       </form-select>
     </div>
 
-    <div class='form-value__container'>
-      <control-input
-        label='Are tracks required?'
-        :checked='areTracksRequired'
-        @toggle='areTracksRequired = !areTracksRequired'
-      >
-      </control-input>
-    </div>
-
-    <div v-if='areTracksRequired'>
-      <div class='form-value__container'>
-        <p>Track Radius</p>
-        <span v-for='radius in trackOptions.trackRadiusOptions' :key='`tr-${radius}`'>
-        <control-input
-          radio-control
-          :label='`${radius}`'
-          :checked='chosenTrackRadius === radius'
-          :value='`${radius}`'
-          @check='(...v) => { chosenTrackRadius = Number(v[0]) }'
-        >
-        </control-input>
-        </span>
-      </div>
-
-      <div class='form-value__container'>
-      <form-select
-        label='Track Type'
-        label-position-top
-        :options='trackOptions.trackTypeOptions.map((t) => t.displayName)'
-        :values='trackOptions.trackTypeOptions.map((t) => t.key)'
-        :selected='selectedTrackType'
-        @select='(...v) => { selectedTrackType = v[0] }'
-      >
-      </form-select>
-      </div>
-
-      <div class='form-value__container'>
-        <p>Special Track Request</p>
-
-        <control-input
-          radio-control
-          label='Not required'
-          :checked='chosenSpecialTrackRequest === null'
-          :value='null'
-          @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
-        >
-        </control-input>
-        <span v-for='specialTrack in trackOptions.specialTrackRequestOptions' :key='`str-${specialTrack.key}`'>
-          <control-input
-            radio-control
-            :label='specialTrack.displayName'
-            :checked='chosenSpecialTrackRequest === specialTrack.key'
-            :value='specialTrack.key'
-            @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
-          >
+    <div class='form-row'>
+      <div class='form-row__field-group'>
+        <div>
+          <control-input label='Are tracks required?' :checked='areTracksRequired' @toggle='areTracksRequired = !areTracksRequired'>
           </control-input>
-        </span>
+        </div>
+
+        <div v-if='areTracksRequired' class='guarded tracks-info'>
+          <div class='track-radius'>
+            <p>Track Radius</p>
+            <div class='tracks-radio-group'>
+              <span v-for='radius in trackOptions.trackRadiusOptions' :key='`tr-${radius}`'>
+                <control-input
+                  radio-control
+                  :label='`${radius}`'
+                  :checked='chosenTrackRadius === radius'
+                  :value='`${radius}`'
+                  @check='(...v) => { chosenTrackRadius = Number(v[0]) }'
+                >
+                </control-input>
+              </span>
+            </div>
+          </div>
+
+          <form-select
+            class='track-type-select'
+            label='Track Type'
+            label-position-top
+            :options='trackOptions.trackTypeOptions.map((t) => t.displayName)'
+            :values='trackOptions.trackTypeOptions.map((t) => t.key)'
+            :selected='selectedTrackType'
+            @select='(...v) => { selectedTrackType = v[0] }'
+          >
+          </form-select>
+
+          <div>
+            <p>Special Track Request</p>
+
+            <div class='tracks-radio-group tracks-special'>
+              <control-input
+                radio-control
+                label='Not required'
+                :checked='chosenSpecialTrackRequest === null'
+                :value='null'
+                @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
+              >
+              </control-input>
+              <span v-for='specialTrack in trackOptions.specialTrackRequestOptions' :key='`str-${specialTrack.key}`'>
+                <control-input
+                  radio-control
+                  :label='specialTrack.displayName'
+                  :checked='chosenSpecialTrackRequest === specialTrack.key'
+                  :value='specialTrack.key'
+                  @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
+                >
+                </control-input>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class='form-value__container'>
+    <div class='form-row'>
       <form-input
+        class='input-small'
         label='Extension Height'
         placeholder='Extension height'
         suffix='ft'
@@ -189,9 +194,7 @@
         @change='(...v) => updateExtensionHeightValue(...v)'
       >
       </form-input>
-    </div>
 
-    <div class='form-value__container'>
       <multiselect-typeahead
         label='Extras'
         :options='hardwareExtras'
@@ -334,4 +337,164 @@ function handleFormSubmit() : void {
 </script>
 
 <style scoped lang='scss'>
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .form-row__field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      & > div {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+
+        & > * {
+          flex: 1;
+        }
+
+        &.group-gap-min {
+          justify-content: space-evenly;
+
+          & > * {
+            flex: auto;
+          }
+        }
+      }
+
+      .guarded {
+        border: 1px solid #CACED1;
+        border-radius: 6px;
+        padding: 8px 12px;
+      }
+
+      .tracks-info {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+    }
+
+    & > * {
+      flex: 1;
+    }
+
+    .flex-max {
+      flex: 1.5;
+    }
+
+    .flex-small {
+      flex: 0.6;
+    }
+
+    .input-small {
+      min-width: 200px;
+      max-width: 250px;
+    }
+
+    .door-size-select-group {
+      min-width: 410px;
+    }
+
+    .cb-panels {
+      min-width: 150px;
+      max-width: 155px;
+    }
+
+    .val-select {
+      min-width: 230px;
+    }
+
+    .frame-radio-group {
+      min-width: 150px;
+      max-width: 155px;
+    }
+
+    .window-cb-group {
+      min-width: 270px;
+      max-width: 300px;
+    }
+
+    .tracks-radio-group {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .track-radius {
+      min-width: 100px;
+      max-width: 120px;
+    }
+
+    .track-type-select {
+      min-width: 270px;
+    }
+
+    .tracks-special {
+      min-width: 465px;
+      max-width: 500px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  form {
+    .form-row {
+      flex-direction: column;
+
+      .form-row__field-group {
+        & > div {
+          flex-direction: column;
+        }
+      }
+
+      .input-small {
+        max-width: none;
+      }
+
+      .door-size-select-group {
+        min-width: 0;
+        max-width: none;
+      }
+
+      .frame-radio-group {
+
+        & > div {
+          flex-direction: row;
+        }
+      }
+
+      .window-cb-group {
+        min-width: 0;
+        max-width: none;
+
+        & > div {
+          flex-direction: row;
+        }
+      }
+
+      .tracks-info {
+        flex-direction: column;
+      }
+
+      .track-type-select {
+        min-width: 0;
+        max-width: none;
+      }
+
+      .tracks-special {
+        flex-direction: column;
+        min-width: 0;
+        max-width: none;
+      }
+    }
+  }
+}
 </style>
