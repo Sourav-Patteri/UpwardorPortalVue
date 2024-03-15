@@ -153,48 +153,52 @@
             @select='(...v) => { selectedTrackType = v[0] }'
           >
           </form-select>
+        </div>
+      </div>
+    </div>
 
-          <div>
-            <p>Special Track Request</p>
-
-            <div class='tracks-radio-group tracks-special'>
+    <div v-if='areTracksRequired' class='form-row'>
+      <div class='form-row__field-group'>
+        <p>Special Track Request</p>
+        <div>
+          <div class='tracks-radio-group tracks-special'>
+            <control-input
+              radio-control
+              label='Not required'
+              :checked='chosenSpecialTrackRequest === null'
+              :value='null'
+              @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
+            >
+            </control-input>
+            <span v-for='specialTrack in trackOptions.specialTrackRequestOptions' :key='`str-${specialTrack.key}`'>
               <control-input
                 radio-control
-                label='Not required'
-                :checked='chosenSpecialTrackRequest === null'
-                :value='null'
+                :label='specialTrack.displayName'
+                :checked='chosenSpecialTrackRequest === specialTrack.key'
+                :value='specialTrack.key'
                 @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
               >
               </control-input>
-              <span v-for='specialTrack in trackOptions.specialTrackRequestOptions' :key='`str-${specialTrack.key}`'>
-                <control-input
-                  radio-control
-                  :label='specialTrack.displayName'
-                  :checked='chosenSpecialTrackRequest === specialTrack.key'
-                  :value='specialTrack.key'
-                  @check='(...v) => { chosenSpecialTrackRequest = v[0] }'
-                >
-                </control-input>
-              </span>
-            </div>
+            </span>
           </div>
+        </div>
+        <div v-if='chosenSpecialTrackRequest'>
+          <form-input
+          class='input-small'
+          label='Extension Height'
+          placeholder='Extension height'
+          suffix='ft'
+          :value='extensionHeight'
+          :min='1'
+          :max='15'
+          @change='(...v) => updateExtensionHeightValue(...v)'
+          >
+          </form-input>
         </div>
       </div>
     </div>
 
     <div class='form-row'>
-      <form-input
-        class='input-small'
-        label='Extension Height'
-        placeholder='Extension height'
-        suffix='ft'
-        :value='extensionHeight'
-        :min='1'
-        :max='15'
-        @change='(...v) => updateExtensionHeightValue(...v)'
-      >
-      </form-input>
-
       <multiselect-typeahead
         label='Extras'
         :options='hardwareExtras'

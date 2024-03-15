@@ -66,7 +66,7 @@ const filteredOptions = computed((): Array<string> => {
 
 const invalidOptionMessage = computed((): string | undefined => {
   if (props.options.length === props.selected.length) {
-    return 'All options selected';
+    return 'All options selected'; //FIXME: Options and messages persists unless x clicked on at the end. Collapse message if clicked outside search box
   }
 
   if (searchQuery.value && !filteredOptions.value.length) {
