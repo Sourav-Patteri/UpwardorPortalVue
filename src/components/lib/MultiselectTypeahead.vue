@@ -1,7 +1,7 @@
 <template>
   <div class='lib container'>
     <label :for='inputId'>{{ label }}</label>
-    <br>
+
     <div class='field'>
       <input :id='inputId' v-model='searchQuery' ref='searchRef' @focusin.stop='isSearchingOptions = true' />
       <button v-if='isSearchingOptions' class='close' @click.prevent='closeSelections'>
@@ -90,6 +90,14 @@ function selectOption(option: string): void {
 
 <style lang='scss' scoped>
 .container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  label {
+    padding-bottom: 2px;
+  }
+
   .field {
     display: flex;
     align-items: center;
