@@ -1,3 +1,17 @@
 p {
   margin: 0;
 }
+
+button {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.error {
+  color: #FF0033;
+}
+
+.lib.container {
+  margin-bottom: 4px;
+}
