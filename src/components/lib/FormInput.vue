@@ -17,7 +17,9 @@
       <p v-if='suffix' class='field__suffix'>{{ suffix }}</p>
     </div>
 
-    <small v-if='errorMessage' class='error'>{{ errorMessage }}</small>
+    <small v-if='errorMessage' class='error message'>
+      <span>{{ errorMessage }}</span>
+    </small>
   </div>
 </template>
 
@@ -106,9 +108,14 @@ function inputChangeHandler(value: string): void {
     }
   }
 
-  small {
-    padding-top: 2px;
-    padding-left: 4px;
+  small.message {
+    position: absolute;
+
+    span {
+      position: relative;
+      top: 65px;
+      left: 4px;
+    }
   }
 }
 </style>
