@@ -3,7 +3,7 @@
     <label :for='inputId'>{{ label }}</label>
 
     <div class='field'>
-      <input :id='inputId' v-model='searchQuery' ref='searchRef' @focusin.stop='isSearchingOptions = true' />
+      <input :id='inputId' v-model='searchQuery' ref='searchRef' :placeholder='placeholder ? placeholder : "Search for an option"' @focusin.stop='isSearchingOptions = true' />
       <button v-if='isSearchingOptions' class='close' @click.prevent='closeSelections'>
         <close-icon></close-icon>
       </button>
@@ -36,6 +36,7 @@ import InfoIcon from '@/assets/icons/info.svg';
 
 export interface Props {
   label: string
+  placeholder?: string
   options: Array<string>
   selected: Array<string>
 }
