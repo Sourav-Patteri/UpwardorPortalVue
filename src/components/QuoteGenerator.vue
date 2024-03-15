@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent='handleFormSubmit'>
+  <form>
     <div class='form-row'>
       <form-input
         required
@@ -205,8 +205,9 @@
       </multiselect-typeahead>
     </div>
 
-    <div class='form-value__container'>
-      <button>Generate Quote</button>
+    <div class='form-actions'>
+      <button class='secondary' type='reset' @click.prevent='resetState'>Reset</button>
+      <button class='primary' type='submit' :disabled='isSubmitDisabled' @click.prevent='handleFormSubmit'>Generate Quote</button>
     </div>
   </form>
 </template>
@@ -302,7 +303,11 @@ const panelPartNumber = computed((): string => {
   });
 
   return partNumbers.join(', ');
-});  
+});
+
+const isSubmitDisabled = computed((): boolean => {
+  return false;
+});
 
 function updateDoorsValue(value: number | null): void {
   doors.value = value;
@@ -323,7 +328,11 @@ function updateSelectedExtras(extra: string, updateMethod: OptionsUpdateMethod):
   }
 }
 
-function handleFormSubmit() : void {
+function handleFormSubmit(): void {
+  if (isSubmitDisabled.value) {
+    return;
+  }
+
     // Call function to calculate quote
   const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value.substring(0, 2)];
 
@@ -333,6 +342,26 @@ function handleFormSubmit() : void {
 
   // TODO: Decide and put in how to display the information. Tabular form?
   console.log(`Your quote: Panel Part Numbers - ${panelPartNumber.value}. The Bottom Retainer part number is- ${bottomRetainerPart}. The Astragal is PL10-00005-01. The Glazing Kit is ${glazingKitPart}`);
+}
+
+function resetState(): void {
+  doors.value = 1;
+  isPanelsOnlyOrder.value = false;
+  selectedDoorWidth.value = null;
+  selectedDoorHeight.value = null;
+  selectedStampPattern.value = null;
+  selectedPanelColor.value = null;
+  hasWindows.value = false;
+  isVerticalConfiguration.value = false;
+  chosenFrameSize.value = null;
+  selectedGlazingType.value = null;
+  selectedInsertType.value = null;
+  areTracksRequired.value = false;
+  chosenTrackRadius.value = null;
+  selectedTrackType.value = null;
+  chosenSpecialTrackRequest.value = null;
+  extensionHeight.value = 1;
+  selectedExtras.value = hardwareExtras;
 }
 </script>
 
@@ -440,6 +469,44 @@ form {
     .tracks-special {
       min-width: 465px;
       max-width: 500px;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 24px;
+
+    button {
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 60px;
+      padding: 8px 20px;
+      font-size: 16px;
+
+      $primary-color: #379392;
+
+      &.primary {
+        border-color: $primary-color;
+        color: $primary-color;
+
+        &:hover {
+          background-color: $primary-color;
+          color: white;
+        }
+
+        &:disabled {
+          border-color: #CACED1;
+          background-color: white;
+          color: #CACED1;
+          cursor: not-allowed;
+        }
+      }
+
+      &.secondary {
+        &:hover {
+          background-color: #CACED1;
+        }
+      }
     }
   }
 }
