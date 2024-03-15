@@ -4,10 +4,11 @@
       :id='controlId'
       :type='radioControl ? "radio" : "checkbox"'
       :checked='checked'
-      @click='radioControl ? emit("check", value ?? null) : emit("toggle")'
+      :disabled='disabled'
+      @click='handleClick'
     />
 
-    <label :for='controlId'>{{ label }}</label>
+    <label :for='controlId' :class='{ "disabled": disabled }'>{{ label }}</label>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ export interface Props {
   label: string
   checked: boolean
   value?: string | null
+  disabled?: boolean
   radioControl?: boolean
 }
 
@@ -31,12 +33,21 @@ const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 const controlId = ref(`control-${props.label.toLowerCase().replace(/ /g, '-')}`);
+
+function handleClick(): void {
+  if (props.disabled) {
+    return;
+  }
+
+  return props.radioControl ? emit('check', props.value ?? null) : emit('toggle');
+}
 </script>
 
 <style lang='scss' scoped>
 .container {
   display: grid;
   grid-template-columns: 16px auto;
+  align-content: end;
   gap: 8px;
 
   input {
@@ -70,6 +81,14 @@ const controlId = ref(`control-${props.label.toLowerCase().replace(/ /g, '-')}`)
     &:focus {
       outline: 2px solid #EFEFEF;
     }
+
+    &:disabled {
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: white;
+      }
+    }
   }
 
   input[type="checkbox"] {
@@ -100,6 +119,11 @@ const controlId = ref(`control-${props.label.toLowerCase().replace(/ /g, '-')}`)
 
   label {
     cursor: pointer;
+
+    &.disabled {
+      color: #CACED1;
+      cursor: not-allowed;
+    }
   }
 }
 </style>

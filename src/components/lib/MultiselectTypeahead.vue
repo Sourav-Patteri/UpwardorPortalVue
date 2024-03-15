@@ -1,9 +1,9 @@
 <template>
   <div class='lib container'>
     <label :for='inputId'>{{ label }}</label>
-    <br>
+
     <div class='field'>
-      <input :id='inputId' v-model='searchQuery' ref='searchRef' @focusin.stop='isSearchingOptions = true' />
+      <input :id='inputId' v-model='searchQuery' ref='searchRef' :placeholder='placeholder ? placeholder : "Search for an option"' @focusin.stop='isSearchingOptions = true' />
       <button v-if='isSearchingOptions' class='close' @click.prevent='closeSelections'>
         <close-icon></close-icon>
       </button>
@@ -36,6 +36,7 @@ import InfoIcon from '@/assets/icons/info.svg';
 
 export interface Props {
   label: string
+  placeholder?: string
   options: Array<string>
   selected: Array<string>
 }
@@ -90,6 +91,14 @@ function selectOption(option: string): void {
 
 <style lang='scss' scoped>
 .container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  label {
+    padding-bottom: 2px;
+  }
+
   .field {
     display: flex;
     align-items: center;
@@ -128,7 +137,7 @@ function selectOption(option: string): void {
     background-color: white;
     list-style: none;
     position: absolute;
-    margin-top: 6px;
+    margin-top: 65px;
     padding: 5px 0;
     width: 300px;
     z-index: 1;

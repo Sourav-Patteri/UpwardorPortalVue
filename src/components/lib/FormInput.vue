@@ -12,12 +12,15 @@
         :min='min'
         :max='max'
         :required='required'
+        :disabled='disabled'
         @input='inputChangeHandler(($event.target as HTMLInputElement)?.value)'
       />
       <p v-if='suffix' class='field__suffix'>{{ suffix }}</p>
     </div>
 
-    <small v-if='errorMessage' class='error'>{{ errorMessage }}</small>
+    <small v-if='errorMessage' class='error message'>
+      <span>{{ errorMessage }}</span>
+    </small>
   </div>
 </template>
 
@@ -33,6 +36,7 @@ export interface Props {
   max: number
   suffix?: string
   required?: boolean
+  disabled?: boolean
 }
 
 interface Emits {
@@ -57,6 +61,10 @@ const errorMessage = computed((): string | undefined => {
 });
 
 function inputChangeHandler(value: string): void {
+  if (props.disabled) {
+    return;
+  }
+
   if (value === '' || value.match(/\D/g)) {
     emit('change', null);
 
@@ -91,6 +99,10 @@ function inputChangeHandler(value: string): void {
       &:focus {
         outline: none;
       }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     }
 
     input[type='number'] {
@@ -106,9 +118,14 @@ function inputChangeHandler(value: string): void {
     }
   }
 
-  small {
-    padding-top: 2px;
-    padding-left: 4px;
+  small.message {
+    position: absolute;
+
+    span {
+      position: relative;
+      top: 65px;
+      left: 4px;
+    }
   }
 }
 </style>

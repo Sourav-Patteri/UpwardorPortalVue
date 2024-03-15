@@ -1,14 +1,12 @@
 <template>
   <div class='app'>
-    Upwardor Portal
-    <quote-generator />
+    <main-content title='Upwardor Portal'> <!-- FIXME: Maybe a different title for the page? -->
+      <portal-view></portal-view>
+    </main-content>
   </div>
 </template>
 
 <script setup lang='ts'>
-import QuoteGenerator from '@/components/QuoteGenerator.vue';
+import MainContent from '@/components/MainContent.vue';
+import PortalView from '@/views/PortalView.vue';
 </script>
-
-<style scoped>
-</style>
-
