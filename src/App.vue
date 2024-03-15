@@ -1,6 +1,6 @@
 <template>
   <div class='app'>
-    <main-content title='Upwardor Portal'>
+    <main-content title='Upwardor Portal'> <!-- FIXME: Maybe a different title for the page? -->
       <portal-view></portal-view>
     </main-content>
   </div>
