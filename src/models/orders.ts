@@ -95,7 +95,7 @@ export const stampPatterns: Array<KeyDisplayNameValue> = [
 ];
 
 export const panelColors: Array<KeyDisplayNameValue> = [
-  { key: 'WHITE', displayName: 'WHITE', value: '00'},                                                       
+  { key: 'WHITE', displayName: 'WHITE', value: '00'},
   { key: 'SANDTONE', displayName: 'SANDTONE', value: '04'},
   { key: 'BLACK', displayName: 'BLACK', value: '05'},
   { key: 'BRONZE', displayName: 'BRONZE', value: '06'},

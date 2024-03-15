@@ -314,7 +314,7 @@ const isSubmitDisabled = computed((): boolean => {
     return true;
   }
 
-  if (areTracksRequired.value && (!chosenTrackRadius || !selectedTrackType.value)) {
+  if (areTracksRequired.value && (!chosenTrackRadius.value || !selectedTrackType.value)) {
     return true;
   }
 
