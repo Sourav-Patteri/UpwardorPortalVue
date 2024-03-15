@@ -3,12 +3,12 @@
     <label :for='selectId'>{{ label }}</label>
 
     <div class='select-container'>
-      <select :id='selectId' :value='selected'>
+      <select :id='selectId' :value='selected' :disabled='disabled'>
         <option
           v-for='(opt, index) in displayOptions'
           :key='`${selectId}-${index}`'
           :value='opt[1]'
-          @click.prevent='emit("select", opt[1])'
+          @click.prevent='selectOption(opt[1])'
         >
           {{ opt[0] }}
         </option>
@@ -28,6 +28,7 @@ export interface Props {
   options: Array<string>
   values?: Array<string>
   selected: string | null
+  disabled?: boolean
 }
 
 export interface Emits {
@@ -50,6 +51,14 @@ const displayOptions = computed((): Map<string, string> => {
 
   return opts;
 });
+
+function selectOption(option: string): void {
+  if (props.disabled) {
+    return;
+  }
+
+  emit('select', option);
+}
 </script>
 
 <style lang='scss' scoped>
@@ -78,6 +87,10 @@ const displayOptions = computed((): Map<string, string> => {
       border-radius: 4px;
       color: #000;
       cursor: pointer;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     }
   }
 }

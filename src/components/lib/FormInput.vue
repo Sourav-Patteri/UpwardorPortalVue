@@ -12,6 +12,7 @@
         :min='min'
         :max='max'
         :required='required'
+        :disabled='disabled'
         @input='inputChangeHandler(($event.target as HTMLInputElement)?.value)'
       />
       <p v-if='suffix' class='field__suffix'>{{ suffix }}</p>
@@ -35,6 +36,7 @@ export interface Props {
   max: number
   suffix?: string
   required?: boolean
+  disabled?: boolean
 }
 
 interface Emits {
@@ -59,6 +61,10 @@ const errorMessage = computed((): string | undefined => {
 });
 
 function inputChangeHandler(value: string): void {
+  if (props.disabled) {
+    return;
+  }
+
   if (value === '' || value.match(/\D/g)) {
     emit('change', null);
 
@@ -92,6 +98,10 @@ function inputChangeHandler(value: string): void {
 
       &:focus {
         outline: none;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
       }
     }
 
