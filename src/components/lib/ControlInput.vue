@@ -37,6 +37,7 @@ const controlId = ref(`control-${props.label.toLowerCase().replace(/ /g, '-')}`)
 .container {
   display: grid;
   grid-template-columns: 16px auto;
+  align-content: end;
   gap: 8px;
 
   input {
