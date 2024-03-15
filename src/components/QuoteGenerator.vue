@@ -93,7 +93,7 @@
           <control-input label='Windows' :checked='hasWindows' @toggle='hasWindows = !hasWindows'>
           </control-input>
 
-          <control-input label='Vertical Configuration' :checked='isVerticalConfiguration' @toggle='isVerticalConfiguration = !isVerticalConfiguration'>
+          <control-input label='Vertical Configuration' :disabled='!hasWindows' :checked='isVerticalConfiguration' @toggle='isVerticalConfiguration = !isVerticalConfiguration'>
           </control-input>
         </div>
       </div>
