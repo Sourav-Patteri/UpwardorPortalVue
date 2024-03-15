@@ -25,7 +25,10 @@ const props = defineProps<Props>();
   display: flex;
   align-items: flex-end;
   gap: 40px;
-  margin: 40px 32px;
+  margin: 0;
+  padding: 40px 32px;
+  background-color: #FFFFF3;
+  box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.75);
 
   .page-title {
     font-size: 30px;
@@ -34,5 +37,9 @@ const props = defineProps<Props>();
     margin: 0;
     margin-bottom: 12px;
   }
+}
+
+main {
+  padding: 24px 24px;
 }
 </style>
