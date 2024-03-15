@@ -71,7 +71,8 @@ const displayOptions = computed((): Map<string, string> => {
       appearance: none;
       -webkit-appearance: none;
       width: 100%;
-      padding: 10px 6px;
+      height: 34px;
+      padding: 6px 10px;
       background-color: #FFF;
       border: 1px solid #CACED1;
       border-radius: 4px;
