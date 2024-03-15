@@ -136,7 +136,7 @@ function selectOption(option: string): void {
     background-color: white;
     list-style: none;
     position: absolute;
-    margin-top: 6px;
+    margin-top: 65px;
     padding: 5px 0;
     width: 300px;
     z-index: 1;
