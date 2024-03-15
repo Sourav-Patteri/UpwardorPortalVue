@@ -79,7 +79,7 @@
               :label='size'
               :checked='chosenFrameSize === size'
               :value='size'
-              @check='(...v) => { chosenFrameSize = v[0] }'
+              @check='(...v) => { chosenFrameSize = v[0] ?? frameSizes[0] }'
             >
             </control-input>
           </span>
@@ -229,8 +229,7 @@ import {
   trackOptions,
   hardwareExtras,
   panelsTable,
-  bottomRetainerParts,
-  frameSizeNumber
+  bottomRetainerParts
 } from '@/models/orders';
 
 
@@ -348,7 +347,7 @@ function handleFormSubmit(): void {
 
   const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value!.substring(0, 2)];
 
-  const frameTypeNum = frameSizeNumber[chosenFrameSize.value];
+  const frameTypeNum = chosenFrameSize.value === 'Short' ? 0 : 1;
 
   const glazingKitPart = `GK15-1${frameTypeNum}${selectedPanelColor.value}-00`;
 
