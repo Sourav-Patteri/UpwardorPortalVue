@@ -56,7 +56,6 @@ function selectOption(option: string): void {
   if (props.disabled) {
     return;
   }
-
   emit('select', option);
 }
 </script>

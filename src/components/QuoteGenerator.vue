@@ -98,25 +98,27 @@
         </div>
       </div>
 
-      <form-select
-        class='val-select'
-        label='Glazing Type'
-        :options='glazingTypeOptions.map((g) => g.displayName)'
-        :values='glazingTypeOptions.map((g) => g.key)'
-        :selected='selectedGlazingType'
-        @select='(...v) => { selectedGlazingType = v[0] }'
-      >
-      </form-select>
+      <div v-if='hasWindows'>
+        <form-select
+          class='val-select'
+          label='Glazing Type'
+          :options='glazingTypeOptions.map((g) => g.displayName)'
+          :values='glazingTypeOptions.map((g) => g.key)'
+          :selected='selectedGlazingType'
+          @select='(...v) => { selectedGlazingType = v[0] }'
+        >
+        </form-select>
 
-      <form-select
-        class='val-select'
-        label='Insert Type'
-        :options='insertTypeOptions.map((i) => i.displayName)'
-        :values='insertTypeOptions.map((i) => i.key)'
-        :selected='selectedInsertType'
-        @select='(...v) => { selectedInsertType = v[0] }'
-      >
-      </form-select>
+        <form-select
+          class='val-select'
+          label='Insert Type'
+          :options='insertTypeOptions.map((i) => i.displayName)'
+          :values='insertTypeOptions.map((i) => i.key)'
+          :selected='selectedInsertType'
+          @select='(...v) => { selectedInsertType = v[0] }'
+        >
+        </form-select>
+      </div>
     </div>
 
     <div class='form-row'>
@@ -310,17 +312,19 @@ const panelPartNumber = computed((): string => {
 });
 
 const isSubmitDisabled = computed((): boolean => {
-  if (!doors.value || !selectedDoorWidth.value || !selectedDoorHeight.value || !selectedStampPattern.value || !selectedPanelColor.value) {
+  //FIXME: isSubmitDisabled does not reevaluate on input change
+
+  /* if (!doors.value || !selectedDoorWidth.value || !selectedDoorHeight.value || !selectedStampPattern.value || !selectedPanelColor.value) {
     return true;
   }
-
+  //  console.log(`has windows- ${hasWindows.value}, glaz- ${!selectedGlazingType.value} insert- ${!selectedInsertType.value}`)
   if (hasWindows.value && (!selectedGlazingType.value || !selectedInsertType.value)) {
     return true;
   }
 
   if (areTracksRequired.value && (!chosenTrackRadius.value || !selectedTrackType.value)) {
     return true;
-  }
+  } */
 
   return false;
 });
@@ -348,15 +352,22 @@ function handleFormSubmit(): void {
   if (isSubmitDisabled.value) {
     return;
   }
-
+  
+  //console.log(`selectedDoorWidth- ${selectedDoorWidth.value}`);
   const bottomRetainerPart = bottomRetainerParts[selectedDoorWidth.value!.substring(0, 2)];
 
-  const frameTypeNum = chosenFrameSize.value === 'Short' ? 0 : 1;
+  let frameTypeNum = chosenFrameSize.value === 'Short' ? 0 : 1;
 
   const glazingKitPart = `GK15-1${frameTypeNum}${selectedPanelColor.value}-00`;
 
+  frameTypeNum = chosenFrameSize.value === 'Short' ? 19 : 18;
+  const archedOrNot = (selectedInsertType.value === '10' || selectedInsertType.value === '11') ? 2 : 1;
+
+  const insertPart = `GL${frameTypeNum}-${selectedInsertType.value}${archedOrNot}-00`;
+
   // TODO: Decide and put in how to display the information. Tabular form?
-  console.log(`Your quote: Panel Part Numbers - ${panelPartNumber.value}. The Bottom Retainer part number is- ${bottomRetainerPart}. The Astragal is PL10-00005-01. The Glazing Kit is ${glazingKitPart}`);
+  console.log(`Your quote: Panel Part Numbers - ${panelPartNumber.value}. The Bottom Retainer part number is- ${bottomRetainerPart}. 
+  The Astragal is PL10-00005-01. The Glazing Kit is ${glazingKitPart}. The Insert Part is ${insertPart}`);
 }
 
 function resetState(): void {
