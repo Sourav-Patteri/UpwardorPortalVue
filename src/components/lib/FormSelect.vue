@@ -3,12 +3,11 @@
     <label :for='selectId'>{{ label }}</label>
 
     <div class='select-container'>
-      <select :id='selectId' :value='selected' :disabled='disabled'>
+      <select :id='selectId' :value='selected' :disabled='disabled' @change.prevent.stop='selectOption($event.target.value)'>
         <option
           v-for='(opt, index) in displayOptions'
           :key='`${selectId}-${index}`'
           :value='opt[1]'
-          @click.prevent='selectOption(opt[1])'
         >
           {{ opt[0] }}
         </option>

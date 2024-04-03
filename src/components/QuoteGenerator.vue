@@ -90,8 +90,7 @@
     <div class='form-row'>
       <div class='form-row__field-group window-cb-group'>
         <div class='group-gap-min'>
-          <control-input label='Windows' :checked='hasWindows' @toggle='hasWindows = !hasWindows'>
-          </control-input>
+          <control-input label='Windows' :checked='hasWindows' @toggle='hasWindows = !hasWindows'></control-input>
 
           <control-input label='Vertical Configuration' :disabled='!hasWindows' :checked='isVerticalConfiguration' @toggle='isVerticalConfiguration = !isVerticalConfiguration'>
           </control-input>
@@ -380,7 +379,7 @@ function resetState(): void {
 form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
 
   .form-row {
     display: flex;
