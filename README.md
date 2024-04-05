@@ -1,12 +1,37 @@
-# Vue 3 + TypeScript + Vite
+# Upwardor Portal
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-## Recommended IDE Setup
+## Prerequisites
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- [nodejs](https://nodejs.org/en)
+- [npm](https://www.npmjs.com/)
 
-## Type Support For `.vue` Imports in TS
+## Running Application locally
+
+Clone the repository
+```shell
+git clone https://github.com/Sourav-Patteri/UpwardorPortalVue.git && cd UpwardorPortalVue
+```
+
+Install dependencies:
+```shell
+npm install
+```
+
+Starting the development environment:
+```shell
+npm run dev
+```
+
+## Development Environment Setup
+
+### Recommended IDE
+
+- [VS Code](https://code.visualstudio.com/)
+- [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur)
+- [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+### Type Support For `.vue` Imports in TS
 
 TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
 
