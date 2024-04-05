@@ -3,7 +3,7 @@
     <label :for='selectId'>{{ label }}</label>
 
     <div class='select-container'>
-      <select :id='selectId' :value='selected' :disabled='disabled' @change.prevent.stop='selectOption($event.target.value)'>
+      <select :id='selectId' :value='selected' :disabled='disabled' @change.prevent.stop='selectOption(($event.target as HTMLSelectElement).value)'>
         <option
           v-for='(opt, index) in displayOptions'
           :key='`${selectId}-${index}`'
